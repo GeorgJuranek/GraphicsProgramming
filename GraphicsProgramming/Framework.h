@@ -10,6 +10,8 @@ public:
 	static int screenWidth;
 	static int screenHeight;
 
+	bool hasQuit;
+
 	SDL_Window* window;
 	SDL_GLContext context;
 
@@ -18,7 +20,7 @@ public:
 	unsigned MakeWindow();
 	unsigned CreateContext();
 	void SwapWindow();
-	void Close();
+	void CheckForClosingEvents();
 
 	//void EnableFaceCulling(GLenum);
 	//void SetFrontfaceDirection(GLenum);

@@ -11,7 +11,7 @@ public:
 	Shader& operator=(const Shader&) = default;
 
 	//const GLuint& programID = shaderProgramID;
-	const GLuint& programID = ShaderProgramID;
+	const GLuint& programID = shaderProgramID;
 
 	void Init(std::string, std::string = "");
 	void Release();
@@ -21,17 +21,19 @@ public:
 private:
 	std::string vertexName, fragmentName;
 
-	GLuint ShaderProgramID;
+	GLuint shaderProgramID;
 	GLuint vertexShaderID, fragmentShaderID;
 
 	void CreateShaderProgram();
 	void CreateShaderObjects();
 	void CompileShader(GLuint, std::string);
 	void CompileShaders();
-	void AttackShaders();
+	void AttachShaders();
 	void LinkShaderProgram();
 
 	void DetachShader();
+	void DestroyShaders();
+	void DestroyProgram();
 
-
+	std::string ReadFile(std::string);
 };

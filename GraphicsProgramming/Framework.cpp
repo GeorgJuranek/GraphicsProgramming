@@ -20,8 +20,13 @@ unsigned Framework::Init()
 	error = CreateContext();
 	Error::CheckError(error, "Framework failed to create Context");
 
-	error = glewInit();
-	Error::CheckError(error, "Framework failed to init glew");
+	GLenum glewStatus = glewInit();
+	if (glewStatus != GLEW_OK)
+	{
+		std::cerr << "GLEW Error:" << glewGetErrorString(glewStatus) << "\n";
+	}
+	//error = glewInit();
+	//Error::CheckError(error, "Framework failed to init glew");
 	
 	return 0;
 };
@@ -79,26 +84,26 @@ void Framework::SwapWindow()
 
 }
 
-void Framework::Close()
+void Framework::CheckForClosingEvents()
 {
 	SDL_Event events;
-	bool quit = false;
+	//bool quit = false;
 
-	while (quit == false)
+	while (hasQuit == false)
 	{
 		while (SDL_PollEvent(&events))
 		{
 			switch (events.type)
 			{
 			case SDL_QUIT: //-> (x)
-				quit = true;
+				hasQuit = true;
 				break;
 
 
 			case SDL_KEYDOWN: 
 				if (events.key.keysym.sym == SDLK_ESCAPE) //-> ESC
 				{
-					quit = true;
+					hasQuit = true;
 				}
 				break;
 
