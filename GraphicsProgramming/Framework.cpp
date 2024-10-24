@@ -96,8 +96,8 @@ void Framework::CheckForClosingEvents()
 	SDL_Event events;
 	//bool quit = false;
 
-	//while (hasQuit == false)
-	//{
+	while (hasQuit == false)
+	{
 		while (SDL_PollEvent(&events))
 		{
 			switch (events.type)
@@ -118,7 +118,7 @@ void Framework::CheckForClosingEvents()
 				break;
 			}
 		}
-	//}
+	}
 
 	//SDL_GL_SwapWindow(window);
 	//SDL_DestroyWindow(window);

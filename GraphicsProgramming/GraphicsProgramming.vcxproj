@@ -110,12 +110,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>${ProjectDir}Dependencies\assimp\include;${ProjectDir}Dependencies\glew-2.2.0\include;${ProjectDir}Dependencies\glm;${ProjectDir}Dependencies\SDL2_image-2.8.2\include;${ProjectDir}Dependencies\SDL2-2.30.8\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2-2.30.8\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\assimp\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glew-2.2.0\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glm;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2_image-2.8.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\assimp\include;$(ProjectDir)Dependencies\glew-2.2.0\include;$(ProjectDir)Dependencies\glm;$(ProjectDir)Dependencies\SDL2_image-2.8.2\include;$(ProjectDir)Dependencies\SDL2-2.30.8\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>${ProjectDir}Dependencies\assimp\lib;${ProjectDir}Dependencies\glew-2.2.0\lib;${ProjectDir}Dependencies\SDL2_image-2.8.2\lib;${ProjectDir}Dependencies\SDL2-2.30.8\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\assimp\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glew-2.2.0\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2_image-2.8.2\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2-2.30.8\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\assimp\lib\x64;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glew-2.2.0\lib\Release\x64;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2_image-2.8.2\lib\x64;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2-2.30.8\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\assimp\lib;$(ProjectDir)Dependencies\glew-2.2.0\lib;$(ProjectDir)Dependencies\SDL2_image-2.8.2\lib;$(ProjectDir)Dependencies\SDL2-2.30.8\lib;$(ProjectDir)Dependencies\assimp\lib\x64;$(ProjectDir)Dependencies\glew-2.2.0\lib\Release\x64;$(ProjectDir)Dependencies\SDL2_image-2.8.2\lib\x64;$(ProjectDir)Dependencies\SDL2-2.30.8\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp-vc143-mt.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -127,14 +127,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>${ProjectDir}Dependencies\assimp\include;${ProjectDir}Dependencies\glew-2.2.0\include;${ProjectDir}Dependencies\glm;${ProjectDir}Dependencies\SDL2_image-2.8.2\include;${ProjectDir}Dependencies\SDL2-2.30.8\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2-2.30.8\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\assimp\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glew-2.2.0\include;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glm;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2_image-2.8.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\assimp\include;$(ProjectDir)Dependencies\glew-2.2.0\include;$(ProjectDir)Dependencies\glm;$(ProjectDir)Dependencies\SDL2_image-2.8.2\include;$(ProjectDir)Dependencies\SDL2-2.30.8\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>${ProjectDir}Dependencies\assimp\lib;${ProjectDir}Dependencies\glew-2.2.0\lib;${ProjectDir}Dependencies\SDL2_image-2.8.2\lib;${ProjectDir}Dependencies\SDL2-2.30.8\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\assimp\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glew-2.2.0\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2_image-2.8.2\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2-2.30.8\lib;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\assimp\lib\x64;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\glew-2.2.0\lib\Release\x64;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2_image-2.8.2\lib\x64;C:\Users\Georg\Desktop\GraphicsProgramming\GraphicsProgramming\Dependencies\SDL2-2.30.8\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\assimp\lib;$(ProjectDir)Dependencies\glew-2.2.0\lib;$(ProjectDir)Dependencies\SDL2_image-2.8.2\lib;$(ProjectDir)Dependencies\SDL2-2.30.8\lib;$(ProjectDir)Dependencies\assimp\lib\x64;$(ProjectDir)Dependencies\glew-2.2.0\lib\Release\x64;$(ProjectDir)Dependencies\SDL2_image-2.8.2\lib\x64;$(ProjectDir)Dependencies\SDL2-2.30.8\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp-vc143-mt.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

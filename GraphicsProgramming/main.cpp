@@ -7,9 +7,9 @@ int main(int argc, char* argv[])
 {
     std::cout << "Graphics Programming Console:\n";
 
-    Framework framework;
+	Framework* framework = new Framework();
 
-    framework.Init();
+    framework->Init();
 
 
 
@@ -81,9 +81,9 @@ int main(int argc, char* argv[])
 
 
 	// LOOP //
-	while (framework.hasQuit) // -> BUG: Why not !framework.hasQuit ???
+	while (framework->hasQuit) // -> BUG: Why not !framework.hasQuit ???
 	{
-		framework.CheckForClosingEvents();
+		framework->CheckForClosingEvents();
 
 		// RENDERING //
 		glClearColor(0, 0, 0, 1);
@@ -94,11 +94,14 @@ int main(int argc, char* argv[])
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		framework.SwapWindow();
+		if (framework->window != nullptr)
+			framework->SwapWindow();
+		else
+			std::cerr << "framework window is missing";
 	}
 
 	// CLEAN UP //
-	framework.Close();
+	framework->Close();
 	glDeleteVertexArrays(1, &vertexArrayObject);
 
     return 0;
