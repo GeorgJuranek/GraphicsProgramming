@@ -42,4 +42,8 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Basic.vert" />
+    <None Include="Basic.frag" />
+  </ItemGroup>
 </Project>

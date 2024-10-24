@@ -110,7 +110,7 @@ void Shader::LinkShaderProgram()
 	}
 	else
 	{
-		glUseProgram(shaderProgramID);
+		glUseProgram(shaderProgramID); //Solution if only ONE shader, must be done at other place for more than one shader
 	}
 }
 

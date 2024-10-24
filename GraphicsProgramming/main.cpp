@@ -15,7 +15,6 @@ int main(int argc, char* argv[])
 
     /*LESSON 2*/
 
-
 	//TRIANGLE DUMMY//
 	GLfloat triangleData[] = {
 		/*	  X	   Y	Z		  R		G	 B    */
@@ -25,24 +24,23 @@ int main(int argc, char* argv[])
 	};////////////////
 
 
-
-
 	// Shader //
 	Shader basicShader;
-	basicShader.Init("src\\Basic.vert", "src\\Basi.frag");
-	// SETUP
-	GLuint vertexAttribID = glGetAttribLocation(basicShader.programID, "vertexIn");
-	if (vertexAttribID == -1)
-		std::cerr << "Error in vertexIn of Shader";
+	basicShader.Init("Shader\\Basic.vert", "Shader\\Basic.frag");
 
-	GLuint colorAttribID = glGetAttribLocation(basicShader.programID, "colorIn");
+	// SHADER SETUP
+	GLint vertexAttribID = glGetAttribLocation(basicShader.programID, "vertexIn");
+	if (vertexAttribID == -1)
+		std::cerr << "Error in vertexIn of Shader" << "\n";
+
+	GLint colorAttribID = glGetAttribLocation(basicShader.programID, "colorIn");
 	if (colorAttribID == -1)
-		std::cerr << "Error in colorIn of Shader";
+		std::cerr << "Error in colorIn of Shader" << "\n";
 
 	glEnableVertexAttribArray(vertexAttribID);
 	glEnableVertexAttribArray(colorAttribID);
 
-
+	
 
 	//VERTEX BUFFER OBJECT//
 	GLuint vertexBufferObject;
@@ -52,8 +50,10 @@ int main(int argc, char* argv[])
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleData), triangleData, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(vertexAttribID, 3, GL_FLOAT, GL_FLOAT, 6 * sizeof(GLfloat), 0);
-	glVertexAttribPointer(colorAttribID, 3, GL_FLOAT, GL_FLOAT, 6 * sizeof(GLfloat), (GLvoid*));
+
+	//CONNECT SHADER AND BUFFER//
+	glVertexAttribPointer(vertexAttribID, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
+	glVertexAttribPointer(colorAttribID, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 
 
 
