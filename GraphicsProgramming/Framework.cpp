@@ -81,7 +81,14 @@ unsigned Framework::CreateContext()
 
 void Framework::SwapWindow()
 {
+	SDL_GL_SwapWindow(window);
+}
 
+void Framework::Close()
+{
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
 
 void Framework::CheckForClosingEvents()
@@ -89,8 +96,8 @@ void Framework::CheckForClosingEvents()
 	SDL_Event events;
 	//bool quit = false;
 
-	while (hasQuit == false)
-	{
+	//while (hasQuit == false)
+	//{
 		while (SDL_PollEvent(&events))
 		{
 			switch (events.type)
@@ -111,9 +118,9 @@ void Framework::CheckForClosingEvents()
 				break;
 			}
 		}
-	}
+	//}
 
-	SDL_GL_SwapWindow(window);
+	//SDL_GL_SwapWindow(window);
 	//SDL_DestroyWindow(window);
 };
 

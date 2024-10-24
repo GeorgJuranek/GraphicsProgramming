@@ -20,6 +20,8 @@ public:
 	unsigned MakeWindow();
 	unsigned CreateContext();
 	void SwapWindow();
+	void Close();
+
 	void CheckForClosingEvents();
 
 	//void EnableFaceCulling(GLenum);
