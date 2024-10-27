@@ -12,8 +12,8 @@ public:
 
 	bool hasQuit;
 
-	SDL_Window* window;
-	SDL_GLContext context;
+	SDL_Window* window = nullptr;
+	SDL_GLContext context = nullptr;
 
 	unsigned Init();
 	void SetAttributes();

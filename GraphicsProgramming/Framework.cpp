@@ -27,6 +27,13 @@ unsigned Framework::Init()
 	}
 	//error = glewInit();
 	//Error::CheckError(error, "Framework failed to init glew");
+
+
+	if (window != nullptr)
+		std::cout << "Created window";
+
+	if (context != nullptr)
+		std::cout << "Created Context";
 	
 	return 0;
 };
@@ -65,7 +72,7 @@ unsigned Framework::MakeWindow()
 
 unsigned Framework::CreateContext()
 {
-	SDL_GLContext context = nullptr;
+	//SDL_GLContext context = nullptr;
 	context = SDL_GL_CreateContext(window);
 
 	if (context == nullptr)
@@ -86,8 +93,12 @@ void Framework::SwapWindow()
 
 void Framework::Close()
 {
-	SDL_GL_DeleteContext(context);
-	SDL_DestroyWindow(window);
+	if (context != nullptr)
+		SDL_GL_DeleteContext(context);
+
+	if (window != nullptr)
+		SDL_DestroyWindow(window);
+	
 	SDL_Quit();
 }
 
@@ -96,8 +107,8 @@ void Framework::CheckForClosingEvents()
 	SDL_Event events;
 	//bool quit = false;
 
-	while (hasQuit == false)
-	{
+	//while (hasQuit == false)
+	//{
 		while (SDL_PollEvent(&events))
 		{
 			switch (events.type)
@@ -118,7 +129,7 @@ void Framework::CheckForClosingEvents()
 				break;
 			}
 		}
-	}
+	//}
 
 	//SDL_GL_SwapWindow(window);
 	//SDL_DestroyWindow(window);
