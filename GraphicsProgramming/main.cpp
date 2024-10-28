@@ -2,32 +2,35 @@
 
 #include "Framework.h"
 #include "Shader.h"
+#include "Light.h"
+#include "Material.h"
+#include "Mesh.h"
 
 int main(int argc, char* argv[])
 {
     std::cout << "Graphics Programming Console:\n";
 
 	Framework* framework = new Framework();
-
     framework->Init();
 
+	Shader* shader = new Shader();
+	shader->Init("BasicColorLit.vert", "BasicColorLit.frag");; //("Shader/BasicColorLit.vert", "Shader/BasicColorLit.frag"); //("BasicColorLit", "Shader"); //???
 
 
-    /*LESSON 2*/
+	/* //LESSON 2
 
 	//TRIANGLE DUMMY//
 	GLfloat triangleData[] = {
-		/*	  X	   Y	Z		  R		G	 B    */
+		//	  X	   Y	Z		  R		G	 B    
 			-0.5, -0.5, 0.0f,	1.0f, 0.0f, 0.0f, //Vertex1
 			0.0f, 0.5,  0.0f,	0.0f, 1.0f, 0.0f, //Vertex2
 			0.5,  -0.5, 0.0f,	0.0f, 0.0f, 1.0f, //Vertex2
 	};////////////////
 	
 	GLuint indices[] = { 0, 1, 2 };
+	*/
 
-
-
-	// Shader //
+	/* // Shader //
 	Shader basicShader;
 	basicShader.Init("Shader\\Basic.vert", "Shader\\Basic.frag");
 
@@ -39,8 +42,9 @@ int main(int argc, char* argv[])
 	GLint colorAttribID = glGetAttribLocation(basicShader.programID, "colorIn");
 	if (colorAttribID == -1)
 		std::cerr << "Error in colorIn of Shader" << "\n";
+	*/
 
-	
+	/* ///BUFFER///
 	//3) VERTEX ARRAY OBJECT//
 	GLuint vertexArrayObject;
 	glGenVertexArrays(1, &vertexArrayObject);
@@ -66,15 +70,24 @@ int main(int argc, char* argv[])
 	glEnableVertexAttribArray(vertexAttribID);
 	glEnableVertexAttribArray(colorAttribID);
 
-	//LIGHT//
-	//Blinn-Phong-Shading (per vertex)
-
-
 	//VAO UNBIND
 	glBindVertexArray(0);
 
+	*/
+
+	//LIGHT//
+	//Blinn-Phong-Shading (per vertex)
+	Light light;
+	light.Init();
+
+	Material* material = new Material();
+
+	Mesh mesh;
+	mesh.Init(shader, material);
+
+
 	// LOOP //
-	while (!framework->hasQuit && framework->context != nullptr) // -> BUG: Why not !framework.hasQuit ???
+	while (!framework->hasQuit)// && framework->context != nullptr) // -> BUG: Why not !framework.hasQuit ???
 	{
 		framework->CheckForClosingEvents();
 
@@ -82,10 +95,13 @@ int main(int argc, char* argv[])
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBindVertexArray(vertexArrayObject);
 
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//glBindVertexArray(vertexArrayObject);
+		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+
+		mesh.Draw(light);
+
 
 		if (framework->window != nullptr)
 			framework->SwapWindow();
@@ -93,9 +109,11 @@ int main(int argc, char* argv[])
 			std::cerr << "framework window is missing";
 	}
 
+
 	// CLEAN UP //
 	framework->Close();
-	glDeleteVertexArrays(1, &vertexArrayObject);
+	//glDeleteVertexArrays(1, &vertexArrayObject);
+	mesh.Release();
 	delete framework;
 
     return 0;

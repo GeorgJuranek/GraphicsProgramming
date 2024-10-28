@@ -30,10 +30,10 @@ unsigned Framework::Init()
 
 
 	if (window != nullptr)
-		std::cout << "Created window";
+		std::cout << "Created window" << '\n';
 
 	if (context != nullptr)
-		std::cout << "Created Context";
+		std::cout << "Created Context" << '\n';
 	
 	return 0;
 };

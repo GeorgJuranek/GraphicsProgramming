@@ -30,6 +30,18 @@
     <ClCompile Include="Error.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h">
@@ -41,9 +53,25 @@
     <ClInclude Include="Error.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.vert" />
     <None Include="Basic.frag" />
+    <None Include="BasicColorLit.vert" />
+    <None Include="BasicColorLit.frag" />
+    <None Include="AdvancedColorLit.vert" />
+    <None Include="AdvancedColorLit.frag" />
   </ItemGroup>
 </Project>
