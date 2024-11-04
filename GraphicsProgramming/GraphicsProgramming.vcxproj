@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="GraphicsProgramming.cpp" />
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Light.h" />

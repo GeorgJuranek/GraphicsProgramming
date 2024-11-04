@@ -14,6 +14,12 @@ void Shader::Init(std::string vertex, std::string fragment)
 	vertexName = vertex;
 	fragmentName = fragment;
 
+	//Version2: ShaderName//ordner // OCE30OCT24
+	/*
+	vertexName = folderPath+\\"+ name + ".vert;
+	fragmentName = folderPath+\\"+ name + ".frag; 
+	*/
+
 	CreateShaderProgram();
 	CreateShaderObjects();
 	CompileShaders();
