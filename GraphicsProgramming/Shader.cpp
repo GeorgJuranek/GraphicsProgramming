@@ -32,14 +32,14 @@ void Shader::Release()
 	DetachShader();
 }
 
-GLuint Shader::GetAttributeLocation(const GLchar*)
+GLuint Shader::GetAttributeLocation(const GLchar* attributeName)
 {
-	return GLuint();
+	return glGetAttribLocation(shaderProgramID, attributeName);
 }
 
-GLuint Shader::GetUniformLocation(const GLchar*)
+GLuint Shader::GetUniformLocation(const GLchar* uniformName)
 {
-	return GLuint();
+	return glGetUniformLocation(shaderProgramID, uniformName);
 }
 
 void Shader::CreateShaderProgram()
@@ -111,7 +111,7 @@ void Shader::LinkShaderProgram()
 		GLchar error[1000];
 		GLsizei length = 1000;
 
-		glGetShaderInfoLog(shaderProgramID, 1000, &length, error);
+		glGetProgramInfoLog(shaderProgramID, 1000, &length, error);//glGetShaderInfoLog(shaderProgramID, 1000, &length, error);
 		std::cerr << "Shaderprogram did not link" << error << '\n';
 	}
 	else

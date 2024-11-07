@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     framework->Init();
 
 	Shader* shader = new Shader();
-	shader->Init("BasicColorLit.vert", "BasicColorLit.frag");; //("Shader/BasicColorLit.vert", "Shader/BasicColorLit.frag"); //("BasicColorLit", "Shader"); //???
+	shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //("Shader/BasicColorLit.vert", "Shader/BasicColorLit.frag"); //("BasicColorLit", "Shader"); //???
 
 
 	/* //LESSON 2
@@ -77,14 +77,16 @@ int main(int argc, char* argv[])
 
 	//LIGHT//
 	//Blinn-Phong-Shading (per vertex)
-	Light light;
-	light.Init();
+	Light* light = new Light();
+	light->Init();
 
 	Material* material = new Material();
 
 	Mesh mesh;
 	mesh.Init(shader, material);
 
+	/*Camera* camera = new Camera();
+	camera->Init();*/
 
 	// LOOP //
 	while (!framework->hasQuit)// && framework->context != nullptr) // -> BUG: Why not !framework.hasQuit ???
@@ -92,7 +94,7 @@ int main(int argc, char* argv[])
 		framework->CheckForClosingEvents();
 
 		// RENDERING //
-		glClearColor(0, 0, 0, 1);
+		glClearColor(1, 0.33, 0.33, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
@@ -100,7 +102,7 @@ int main(int argc, char* argv[])
 		//glBindVertexArray(vertexArrayObject);
 		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
-		mesh.Draw(light);
+		mesh.Draw(light);//, camera);
 
 
 		if (framework->window != nullptr)

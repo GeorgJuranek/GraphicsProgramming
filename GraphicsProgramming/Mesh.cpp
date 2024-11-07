@@ -25,7 +25,7 @@ void Mesh::Init(/*const char* filePath,*/ Shader* shader, Material* material)
 		0.0f, 0.0f, 1.0f,
 	};
 
-	GLuint indices[] = { 0, 1, 2, 0, 2, 3 }; //rectangle
+	indices = { 0, 1, 2, 0, 2, 3 }; //rectangle
 
 	this->shader = shader;
 	this->material = material;
@@ -72,20 +72,44 @@ void Mesh::Init(/*const char* filePath,*/ Shader* shader, Material* material)
 //	}
 //}
 
-void Mesh::Draw(Light light)
+void Mesh::Draw(Light* light)
 {
 	glUseProgram(shader->programID);
 
-	glUniform3fv(lightPositionID, 1, &(light.position.x));
-	glUniform3fv(lightAmbientID, 1, &(light.ambient.x));
-	glUniform3fv(lightDiffuseID, 1, &(light.diffuse.x));
-	glUniform3fv(lightSpecularID, 1, &(light.specular.x));
+	glUniform3fv(lightPositionID, 1, &(light->position.x));
+	glUniform3fv(lightAmbientID, 1, &(light->ambient.x));
+	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
+	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
 
 	glUniform1f(lightAttenuationConstID, light->attenuationConst);
 	glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
 	glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
 
-	glUniform3fv(materialAmbientID, 1, &(material ->ambient.x));
+	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
+	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
+	glUniform3fv(materialSpecularID, 1, &(material->specular.x));
+	glUniform1f(materialShininessID, material->shininess);
+
+
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+}
+
+void Mesh::Draw(Light* light, Camera* camera)
+{
+	glUseProgram(shader->programID);
+
+	glUniform3fv(lightPositionID, 1, &(light->position.x));
+	glUniform3fv(lightAmbientID, 1, &(light->ambient.x));
+	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
+	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
+
+	glUniform1f(lightAttenuationConstID, light->attenuationConst);
+	glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
+	glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
+
+	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
 	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
 	glUniform3fv(materialSpecularID, 1, &(material->specular.x));
 	glUniform1f(materialShininessID, material->shininess);
@@ -125,16 +149,22 @@ void Mesh::CreateBuffers()
 	positionBuffer = {};
 	const GLchar* attributeName = "positionIn";
 	GLuint attributeID = shader->GetAttributeLocation(attributeName);
+
+	positionBuffer.SetAttributeId(attributeID);
+
 	positionBuffer.CreateBufferObject();
 	positionBuffer.Bind(GL_ARRAY_BUFFER);
-	positionBuffer.Fill(sizeof(vertexPositions), &(vertexPositions), GL_STATIC_DRAW);
+
+	positionBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), vertexPositions.data(), GL_STATIC_DRAW);
+
+	//positionBuffer.Fill(sizeof(vertexPositions), &(vertexPositions), GL_STATIC_DRAW);
 	positionBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
 	positionBuffer.EnableAttribute();
 
 	indexBuffer = {};
 	indexBuffer.CreateBufferObject();
 	indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
-	indexBuffer.Fill(sizeof(indices), &(indices), GL_STATIC_DRAW);
+	indexBuffer.Fill(indices.size() * sizeof(GLfloat), indices.data(), GL_STATIC_DRAW);
 	glBindVertexArray(0);
 
 

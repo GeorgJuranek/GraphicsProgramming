@@ -19,10 +19,11 @@
 //	gl_Position = vec4(positionIn, 1.0);
 //}
 
-in vec4 colorOut;
+//in vec4 colorOut;
 out vec4 pixelColor;
 
 void main(void)
 {
-	pixelColor = colorOut;
+	//pixelColor = colorOut;
+	pixelColor = vec4(1.0, 1.0, 1.0, 1.0);
 }

@@ -7,7 +7,7 @@ void Buffer::CreateBufferObject()
 	glGenBuffers(1, &bufferObjectID);
 }
 
-void Buffer::SetAttributeId(std::string name, GLuint id)
+void Buffer::SetAttributeId( GLuint id)
 {
 	attributeID = id;
 	if (attributeID == -1)
@@ -40,5 +40,4 @@ void Buffer::EnableAttribute()
 void Buffer::Delete()
 {
 	glDeleteBuffers(1, &bufferObjectID);
-	glDisableVertexAttribArray(attributeID); //attributeArray);
 }

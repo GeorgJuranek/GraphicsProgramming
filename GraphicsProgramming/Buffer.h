@@ -6,7 +6,7 @@ class Buffer
 {
 public:
 	void CreateBufferObject();
-	void SetAttributeId(std::string, GLuint);
+	void SetAttributeId(GLuint);
 	void Bind(GLenum);
 	void Fill(GLsizeiptr, const void*, GLenum);
 	void LinkAttribute(GLint, GLenum, GLboolean, GLsizei, const void*);

@@ -11,11 +11,16 @@ public:
 	glm::vec3 diffuse;
 	glm::vec3 specular;
 
+	float attenuationConst;
+	float attenuationLinear;
+	float attenuationQuad;
+
 	void Init();
 
 private:
 
 	GLuint positionID, ambientID, diffuseID, specularID;
 	void CreateBuffers();
+
 };
 
