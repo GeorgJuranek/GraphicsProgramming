@@ -24,6 +24,10 @@ private:
 	GLuint shaderProgramID;
 	GLuint vertexShaderID, fragmentShaderID;
 
+
+	//Test
+	//GLuint mvpID, modelID, normalsID;
+
 	void CreateShaderProgram();
 	void CreateShaderObjects();
 	void CompileShader(GLuint, std::string);

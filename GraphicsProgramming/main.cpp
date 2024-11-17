@@ -10,111 +10,102 @@ int main(int argc, char* argv[])
 {
     std::cout << "Graphics Programming Console:\n";
 
+
+	//The FRAMEWORK creates the window and the openGL context
 	Framework* framework = new Framework();
     framework->Init();
 
-	Shader* shader = new Shader();
-	shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //("Shader/BasicColorLit.vert", "Shader/BasicColorLit.frag"); //("BasicColorLit", "Shader"); //???
-
-
-	/* //LESSON 2
-
-	//TRIANGLE DUMMY//
-	GLfloat triangleData[] = {
-		//	  X	   Y	Z		  R		G	 B    
-			-0.5, -0.5, 0.0f,	1.0f, 0.0f, 0.0f, //Vertex1
-			0.0f, 0.5,  0.0f,	0.0f, 1.0f, 0.0f, //Vertex2
-			0.5,  -0.5, 0.0f,	0.0f, 0.0f, 1.0f, //Vertex2
-	};////////////////
-	
-	GLuint indices[] = { 0, 1, 2 };
-	*/
-
-	/* // Shader //
-	Shader basicShader;
-	basicShader.Init("Shader\\Basic.vert", "Shader\\Basic.frag");
-
-	// SHADER SETUP
-	GLint vertexAttribID = glGetAttribLocation(basicShader.programID, "vertexIn");
-	if (vertexAttribID == -1)
-		std::cerr << "Error in vertexIn of Shader" << "\n";
-
-	GLint colorAttribID = glGetAttribLocation(basicShader.programID, "colorIn");
-	if (colorAttribID == -1)
-		std::cerr << "Error in colorIn of Shader" << "\n";
-	*/
-
-	/* ///BUFFER///
-	//3) VERTEX ARRAY OBJECT//
-	GLuint vertexArrayObject;
-	glGenVertexArrays(1, &vertexArrayObject);
-	glBindVertexArray(vertexArrayObject);
-
-	//1) VERTEX BUFFER OBJECT// -> ALL Vertex Data
-	GLuint vertexBufferObject;
-	glGenBuffers(1, &vertexBufferObject);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleData), triangleData, GL_STATIC_DRAW);
-
-	//2) ELEMENT BUFFER OBJECT// -> Indices (Better Order and Structure of Vertex data)
-	GLuint elementBufferObject;
-	glGenBuffers(1, &elementBufferObject);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	//CONNECT SHADER AND BUFFER//
-	glVertexAttribPointer(vertexAttribID, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
-	glVertexAttribPointer(colorAttribID, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat))); //?wtf is GLvoidPointer?
-
-	//ENABLE USE OF POISITION AND COLOR INFORMATION FOR CURRENT SHADER
-	glEnableVertexAttribArray(vertexAttribID);
-	glEnableVertexAttribArray(colorAttribID);
-
-	//VAO UNBIND
-	glBindVertexArray(0);
-
-	*/
-
-	//LIGHT//
-	//Blinn-Phong-Shading (per vertex)
+	//The LIGHT
 	Light* light = new Light();
 	light->Init();
 
+	//The SHADER creates the shaderProgram from the .vert(vertices) and .frag(fragment =color) glsl code
+	Shader* shader = new Shader();
+	shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //shader->Init("Basic.vert", "Basic.frag"); 
+
+	//The MATERIAL only holds information for the lighting (ambient, diffuse,...)
 	Material* material = new Material();
 
+	//The MESH creates the Buffers for itself (as vbo and gives it to vao)
+	//Gets necessary information from shader and material
+	//Can Draw itself dependent from light and camera
+	//Holds transformations like rotate,translate, scale
 	Mesh mesh;
 	mesh.Init(shader, material);
 
-	/*Camera* camera = new Camera();
-	camera->Init();*/
+
+	//The CAMERA
+	Camera* camera = new Camera();
+	camera->Init();
+
+
+
+	//Infos to Console//
+	std::cout << "Hold 'r' to rotate the object.\n";
 
 	// LOOP //
-	while (!framework->hasQuit)// && framework->context != nullptr) // -> BUG: Why not !framework.hasQuit ???
+	while (!framework->hasQuit)
 	{
 		framework->CheckForClosingEvents();
 
 		// RENDERING //
 		glClearColor(1, 0.33, 0.33, 1);
+		//glClearColor(0, 0, 0, 0);
+
 		glClear(GL_COLOR_BUFFER_BIT);
 
-
-
-		//glBindVertexArray(vertexArrayObject);
-		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-
-		mesh.Draw(light);//, camera);
-
+		if (light == nullptr || camera == nullptr)
+			std::cerr << "No light or camera was found during renderloop!\n";
+		else
+			mesh.Draw(light, camera);
 
 		if (framework->window != nullptr)
 			framework->SwapWindow();
 		else
 			std::cerr << "framework window is missing";
+
+
+
+		//Transformation Tests
+
+		SDL_Keycode currentKey = Framework::GetCurrentKeyCode();
+
+		if (currentKey == SDL_KeyCode::SDLK_r)
+		{
+			mesh.Rotate(3,glm::vec3(0,1,1));
+			std::cout << "rotated\n";
+		}
+
+		if (currentKey == SDL_KeyCode::SDLK_w)
+		{
+			light->Translate(0, 0, -0.3);
+			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
+		}
+		
+		if (currentKey == SDL_KeyCode::SDLK_s)
+		{
+			light->Translate(0, 0, 0.3);
+			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
+		}
+
+		if (currentKey == SDL_KeyCode::SDLK_a)
+		{
+			light->Translate(-0.3, 0, 0);
+			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
+		}
+
+		if (currentKey == SDL_KeyCode::SDLK_d)
+		{
+			light->Translate(0.3, 0, 0);
+			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
+		}
+
+		//std::cout << framework->GetCurrentKeyCode();
 	}
 
 
 	// CLEAN UP //
 	framework->Close();
-	//glDeleteVertexArrays(1, &vertexArrayObject);
 	mesh.Release();
 	delete framework;
 

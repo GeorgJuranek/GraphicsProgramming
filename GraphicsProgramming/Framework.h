@@ -28,4 +28,8 @@ public:
 	//void SetFrontfaceDirection(GLenum);
 	//void EnableDepthTest();
 
+	bool CheckForKeyEvents(SDL_KeyCode keyCode);
+
+	static SDL_Keycode GetCurrentKeyCode();
+
 };

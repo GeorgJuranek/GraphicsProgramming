@@ -5,17 +5,25 @@ void Mesh::Init(/*const char* filePath,*/ Shader* shader, Material* material)
 {
 	//TRIANGLE DUMMY//TEST
 	vertexPositions = {
-		-0.5,	-0.5,	0.0f,
-		-0.5f,	0.5,	0.0f,
-		0.5f,	0.5,	0.0f,
-		0.5,	-0.5,	0.0f,
+		-0.5,	-0.5,	0.0f, //unten links
+		-0.5f,	0.5,	0.0f, //oben links
+		0.5f,	0.5,	0.0f, //oben rechts
+		0.5,	-0.5,	0.0f, //Unten rechts
 	};
 
+	//vertexColors = {
+	//	1.0f, 0.0f, 0.0f, //Rot
+	//	0.0f, 1.0f, 0.0f, //Grün
+	//	0.0f, 0.0f, 1.0f, //Blau
+	//	1.0f, 1.0f, 0.0f, //Gelb
+	//};
+
+	//TEST all red
 	vertexColors = {
-		1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, //Grün
+		0.0f, 1.0f, 0.0f, //Grün
+		0.0f, 1.0f, 0.0f, //Grün
+		0.0f, 1.0f, 0.0f, //Grün
 	};
 
 	vertexNormals = {
@@ -33,6 +41,7 @@ void Mesh::Init(/*const char* filePath,*/ Shader* shader, Material* material)
 	CreateBuffers();
 	GetLightUniformIDs();
 	GetMaterialUniformIDs();
+	GetMVPUniformIDs();
 	cameraPositionID = shader->GetUniformLocation("cameraPosition");
 
 	_position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -72,7 +81,7 @@ void Mesh::Init(/*const char* filePath,*/ Shader* shader, Material* material)
 //	}
 //}
 
-void Mesh::Draw(Light* light)
+void Mesh::Draw(Light* light)//TEST
 {
 	glUseProgram(shader->programID);
 
@@ -81,9 +90,9 @@ void Mesh::Draw(Light* light)
 	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
 	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
 
-	glUniform1f(lightAttenuationConstID, light->attenuationConst);
-	glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
-	glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
+	//glUniform1f(lightAttenuationConstID, light->attenuationConst);
+	//glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
+	//glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
 
 	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
 	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
@@ -105,9 +114,9 @@ void Mesh::Draw(Light* light, Camera* camera)
 	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
 	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
 
-	glUniform1f(lightAttenuationConstID, light->attenuationConst);
-	glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
-	glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
+	//glUniform1f(lightAttenuationConstID, light->attenuationConst);
+	//glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
+	//glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
 
 	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
 	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
@@ -118,7 +127,10 @@ void Mesh::Draw(Light* light, Camera* camera)
 
 	glUniformMatrix4fv(modelID, 1, GL_FALSE, &(_model[0][0]));
 
+
 	_mvp = camera->projectionMatrix * camera->viewMatrix * _model;
+
+
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &(_mvp[0][0]));
 
 	_normal = glm::transpose(glm::inverse(_model));
@@ -143,10 +155,14 @@ void Mesh::Release()
 
 void Mesh::CreateBuffers()
 {
-	glGenVertexArrays(1, &vao);
-
+	//VAO
+	glGenVertexArrays(1, &vao); //parameter: how many vao? Where to save gluint
 	glBindVertexArray(vao);
+
+
+	//BUFFER: positionbuffer
 	positionBuffer = {};
+
 	const GLchar* attributeName = "positionIn";
 	GLuint attributeID = shader->GetAttributeLocation(attributeName);
 
@@ -154,21 +170,40 @@ void Mesh::CreateBuffers()
 
 	positionBuffer.CreateBufferObject();
 	positionBuffer.Bind(GL_ARRAY_BUFFER);
-
 	positionBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), vertexPositions.data(), GL_STATIC_DRAW);
 
-	//positionBuffer.Fill(sizeof(vertexPositions), &(vertexPositions), GL_STATIC_DRAW);
 	positionBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
 	positionBuffer.EnableAttribute();
 
+
+	//?TEST COLOR BUFFER?//
+	colorBuffer = {};
+	GLuint colorAttributeID = shader->GetAttributeLocation("colorIn");
+	colorBuffer.SetAttributeId(colorAttributeID);
+	colorBuffer.CreateBufferObject();
+	colorBuffer.Bind(GL_ARRAY_BUFFER);
+	colorBuffer.Fill(vertexColors.size() * sizeof(GLfloat), vertexColors.data(), GL_STATIC_DRAW);
+	colorBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
+	colorBuffer.EnableAttribute();
+
+
+	//BUFFER: indexbuffer
 	indexBuffer = {};
 	indexBuffer.CreateBufferObject();
 	indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
 	indexBuffer.Fill(indices.size() * sizeof(GLfloat), indices.data(), GL_STATIC_DRAW);
+	/*indexbuffer doesnt need to LinkAttribute and EnableAttribute 
+	because its only for the sequence of indices*/
+
+
+
+
+
+	//Job is done! Empty the vao
 	glBindVertexArray(0);
 
 
-	//
+	////
 	//colorBuffer = {};
 	//GLuint colorAttributeID = shader->GetAttributeLocation("colorIn");
 	//colorBuffer.CreateBufferObject();
@@ -177,6 +212,9 @@ void Mesh::CreateBuffers()
 	//colorBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
 	//colorBuffer.EnableAttribute();
 }
+
+
+
 
 void Mesh::GetLightUniformIDs()
 {

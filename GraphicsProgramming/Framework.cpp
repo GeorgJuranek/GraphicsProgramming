@@ -136,6 +136,52 @@ void Framework::CheckForClosingEvents()
 };
 
 
+bool Framework::CheckForKeyEvents(SDL_KeyCode keyCode)
+{
+	SDL_Event events;
+	//bool quit = false;
+
+	//while (hasQuit == false)
+	//{
+	while (SDL_PollEvent(&events))
+	{
+		switch (events.type)
+		{
+
+		case SDL_KEYDOWN:
+			if (events.key.keysym.sym == keyCode)
+			{
+				return true;
+			}
+
+		default:
+			return false;
+		}
+	}
+	//}
+
+	//SDL_GL_SwapWindow(window);
+	//SDL_DestroyWindow(window);
+};
+
+SDL_Keycode Framework::GetCurrentKeyCode()
+{
+	SDL_Event events;
+
+	while (SDL_PollEvent(&events))
+	{
+		switch (events.type)
+		{
+
+		case SDL_KEYDOWN:
+			return events.key.keysym.sym;
+		}
+	}
+
+	return SDLK_UNKNOWN;
+};
+
+
 
 
 

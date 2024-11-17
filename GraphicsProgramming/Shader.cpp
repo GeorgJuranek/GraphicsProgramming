@@ -14,12 +14,6 @@ void Shader::Init(std::string vertex, std::string fragment)
 	vertexName = vertex;
 	fragmentName = fragment;
 
-	//Version2: ShaderName//ordner // OCE30OCT24
-	/*
-	vertexName = folderPath+\\"+ name + ".vert;
-	fragmentName = folderPath+\\"+ name + ".frag; 
-	*/
-
 	CreateShaderProgram();
 	CreateShaderObjects();
 	CompileShaders();
@@ -111,7 +105,7 @@ void Shader::LinkShaderProgram()
 		GLchar error[1000];
 		GLsizei length = 1000;
 
-		glGetProgramInfoLog(shaderProgramID, 1000, &length, error);//glGetShaderInfoLog(shaderProgramID, 1000, &length, error);
+		glGetProgramInfoLog(shaderProgramID, 1000, &length, error);
 		std::cerr << "Shaderprogram did not link" << error << '\n';
 	}
 	else

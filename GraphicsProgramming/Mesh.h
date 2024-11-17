@@ -55,8 +55,8 @@ private:
 
 	glm::vec3 position;
 
-	//Camera* camera;
-	//Light* light;
+	Camera* camera;
+	Light* light;
 
 	void CreateBuffers();
 
