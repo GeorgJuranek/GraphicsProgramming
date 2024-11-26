@@ -276,3 +276,8 @@ void Mesh::SetPosition(float x, float y, float z)
 	_position = glm::vec3(x, y, z);
 	_model = glm::translate(_model, position - oldPos);
 }
+
+glm::vec3 Mesh::GetRotation(void)
+{
+	return _rotation;
+}

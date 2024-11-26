@@ -23,13 +23,15 @@ public:
 	void Close();
 
 	void CheckForClosingEvents();
-
-	//void EnableFaceCulling(GLenum);
-	//void SetFrontfaceDirection(GLenum);
-	//void EnableDepthTest();
-
 	bool CheckForKeyEvents(SDL_KeyCode keyCode);
-
 	static SDL_Keycode GetCurrentKeyCode();
+
+	void EnableFaceCulling(GLenum);
+	void SetFrontfaceDirection(GLenum);
+	void EnableDepthTest();
+	void ClearWindow();
+	void SetClearColor(float, float, float, float);
+
+
 
 };

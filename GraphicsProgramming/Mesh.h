@@ -42,6 +42,8 @@ public:
 	void SetPosition(glm::vec3 position);
 	void SetPosition(float x, float y, float z);
 
+	glm::vec3 GetRotation(void);
+
 private:
 	Buffer positionBuffer, colorBuffer, indexBuffer;
 	GLuint vao;

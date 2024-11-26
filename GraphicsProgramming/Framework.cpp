@@ -182,6 +182,33 @@ SDL_Keycode Framework::GetCurrentKeyCode()
 };
 
 
+void Framework::EnableFaceCulling(GLenum faceType)
+{
+	glEnable(GL_CULL_FACE); //activate cullingmodus-state for faces
+	glCullFace(faceType);
+}
+
+void Framework::SetFrontfaceDirection(GLenum faceDirection)
+{
+	glFrontFace(faceDirection);
+}
+
+void Framework::EnableDepthTest()
+{
+	glEnable(GL_DEPTH_TEST); //clockwise or not clockwise indices drawing
+}
+
+void Framework::ClearWindow()
+{
+
+}
+
+void Framework::SetClearColor(float, float, float, float)
+{
+
+};
+
+
 
 
 
