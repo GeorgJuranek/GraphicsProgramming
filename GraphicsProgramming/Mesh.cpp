@@ -1,39 +1,60 @@
 #include "Mesh.h"
 #include <gtc\matrix_transform.hpp>
+#include "VertexLoader.h"
 
 void Mesh::Init(/*const char* filePath,*/ Shader* shader, Material* material)
 {
-	//TRIANGLE DUMMY//TEST
-	vertexPositions = {
-		-0.5,	-0.5,	0.0f, //unten links
-		-0.5f,	0.5,	0.0f, //oben links
-		0.5f,	0.5,	0.0f, //oben rechts
-		0.5,	-0.5,	0.0f, //Unten rechts
-	};
+	//VertexLoader loader;
+	//aiMesh* model = loader.LoadModel("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
 
-	//vertexColors = {
-	//	1.0f, 0.0f, 0.0f, //Rot
-	//	0.0f, 1.0f, 0.0f, //Grün
-	//	0.0f, 0.0f, 1.0f, //Blau
-	//	1.0f, 1.0f, 0.0f, //Gelb
-	//};
+	//if (model == nullptr)
+	//{
+	//	//TRIANGLE DUMMY//TEST
+	//	vertexPositions = {
+	//		-0.5,	-0.5,	0.0f, //unten links
+	//		-0.5f,	0.5,	0.0f, //oben links
+	//		0.5f,	0.5,	0.0f, //oben rechts
+	//		0.5,	-0.5,	0.0f, //Unten rechts
+	//	};
 
-	//TEST all red
-	vertexColors = {
-		0.0f, 1.0f, 0.0f, //Grün
-		0.0f, 1.0f, 0.0f, //Grün
-		0.0f, 1.0f, 0.0f, //Grün
-		0.0f, 1.0f, 0.0f, //Grün
-	};
+	//	//vertexColors = {
+	//	//	1.0f, 0.0f, 0.0f, //Rot
+	//	//	0.0f, 1.0f, 0.0f, //Grün
+	//	//	0.0f, 0.0f, 1.0f, //Blau
+	//	//	1.0f, 1.0f, 0.0f, //Gelb
+	//	//};
 
-	vertexNormals = {
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-	};
+	//	//TEST all red
+	//	vertexColors = {
+	//		0.0f, 1.0f, 0.0f, //Grün
+	//		0.0f, 1.0f, 0.0f, //Grün
+	//		0.0f, 1.0f, 0.0f, //Grün
+	//		0.0f, 1.0f, 0.0f, //Grün
+	//	};
 
-	indices = { 0, 1, 2, 0, 2, 3 }; //rectangle
+	//	vertexNormals = {
+	//		0.0f, 0.0f, 1.0f,
+	//		0.0f, 0.0f, 1.0f,
+	//		0.0f, 0.0f, 1.0f,
+	//		0.0f, 0.0f, 1.0f,
+	//	};
+
+	//	indices = { 0, 1, 2, 0, 2, 3 }; //rectangle
+
+	//	std::cerr << "Failed to load Mesh from Path at Mesh.cpp\n";
+	//}
+	//else
+	//{
+	//	LoadFromAssimpMesh(model);
+	//}
+
+	//delete model;
+	//model = nullptr;
+
+	MeshLoader* loader = MeshLoader::getInstance();
+	MeshData* mesh = loader->loadFromFile("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
+
+	LoadFromMeshData(mesh);
 
 	this->shader = shader;
 	this->material = material;
@@ -280,4 +301,169 @@ void Mesh::SetPosition(float x, float y, float z)
 glm::vec3 Mesh::GetRotation(void)
 {
 	return _rotation;
+}
+
+
+
+
+//TESTEST
+
+//void Mesh::LoadFromAssimpMesh(aiMesh* mesh) {
+//	if (!mesh) {
+//		std::cerr << "Null aiMesh passed to LoadFromAssimpMesh!" << std::endl;
+//		return;
+//	}
+//
+//	// Vertices
+//	vertexPositions.clear();
+//	if (mesh==nullptr || mesh->mNumVertices == 0) {//Hier fehler mit GTR model, kein speicherzugriff blablabla
+//		std::cerr << "Mesh has no vertices!" << std::endl;
+//		return;
+//	}
+//
+//	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+//		vertexPositions.push_back(mesh->mVertices[i].x);
+//		vertexPositions.push_back(mesh->mVertices[i].y);
+//		vertexPositions.push_back(mesh->mVertices[i].z);
+//	}
+//
+//	vertexNormals.clear();
+//	if (mesh->HasNormals()) {
+//		for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+//			vertexNormals.push_back(mesh->mNormals[i].x);
+//			vertexNormals.push_back(mesh->mNormals[i].y);
+//			vertexNormals.push_back(mesh->mNormals[i].z);
+//		}
+//	}
+//	else {
+//		std::cerr << "Mesh has no normals!" << std::endl;
+//		for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+//			vertexNormals.push_back(0.0f);  // x
+//			vertexNormals.push_back(0.0f);  // y
+//			vertexNormals.push_back(1.0f);  // z
+//		}
+//	}
+//
+//	// Indices
+//	indices.clear();
+//	if (mesh->mNumFaces == 0) {
+//		std::cerr << "Mesh has no faces!" << std::endl;
+//		return;
+//	}
+//
+//	for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+//
+//		//indices = { 0, 1, 2, 0, 2, 3 }; //rectangle
+//		aiFace face = mesh->mFaces[i];//???ERROR IS HAPPENING HERE SOMEWHERE???? CANT READ INDICES
+//		if (face.mIndices == nullptr) {
+//			std::cerr << "Face " << i << " has no indices!" << std::endl;
+//			continue;
+//		}
+//		for (unsigned int j = 0; j < face.mNumIndices; j++) {
+//			indices.push_back(face.mIndices[j]);
+//		}
+//	}
+//
+//	// Colors
+//	vertexColors.clear();
+//	if (mesh->HasVertexColors(0)) {
+//		for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+//			aiColor4D color = mesh->mColors[0][i];
+//			vertexColors.push_back(color.r);
+//			vertexColors.push_back(color.g);
+//			vertexColors.push_back(color.b);
+//		}
+//	}
+//	else {
+//		std::cerr << "Mesh has no vertex colors, using default white color!" << std::endl;
+//		for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+//			vertexColors.push_back(1.0f); // R
+//			vertexColors.push_back(1.0f); // G
+//			vertexColors.push_back(1.0f); // B
+//		}
+//	}
+
+void Mesh::LoadFromMeshData(MeshData* mesh) {
+	if (!mesh) {
+		std::cerr << "Null aiMesh passed to LoadFromAssimpMesh!" << std::endl;
+		return;
+	}
+
+	// Vertices
+	vertexPositions.clear();
+	if (mesh == nullptr || mesh->vertexCount == 0) {//Hier fehler mit GTR model, kein speicherzugriff blablabla
+		std::cerr << "Mesh has no vertices!" << std::endl;
+		return;
+	}
+
+	for (unsigned int i = 0; i < mesh->vertexPositions->size(); i++) {
+		vertexPositions.push_back(mesh->vertexPositions->at(i));
+	}
+
+	vertexNormals.clear();
+	if (mesh->normals->size() > 0) {
+		for (unsigned int i = 0; i < mesh->normals->size(); i++) {
+			vertexNormals.push_back(mesh->normals->at(i));
+		}
+	}
+	else {
+		std::cerr << "Mesh has no normals!" << std::endl;
+		for (unsigned int i = 0; i < mesh->normals->size(); i++) {
+			vertexNormals.push_back(0.0f);
+		}
+	}
+
+	// Indices
+	indices.clear();
+	if (mesh->faceCount == 0) {
+		std::cerr << "Mesh has no faces!" << std::endl;
+		return;
+	}
+
+	for (unsigned int i = 0; i < mesh->faceCount; i++) {
+
+		//indices = { 0, 1, 2, 0, 2, 3 }; //rectangle
+		//aiFace face = mesh->mFaces[i];//???ERROR IS HAPPENING HERE SOMEWHERE???? CANT READ INDICES
+		//if (face.mIndices == nullptr) {
+		//	std::cerr << "Face " << i << " has no indices!" << std::endl;
+		//	continue;
+		//}
+		//for (unsigned int j = 0; j < face.mNumIndices; j++) {
+		//	indices.push_back(face.mIndices[j]);
+		//}
+			indices.push_back(mesh->face_vertexIndices->at(i));
+			indices.push_back(mesh->face_uvIndices->at(i));
+			indices.push_back(mesh->face_normalIndices->at(i));
+	}
+
+	//TESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTESTEST
+	vertexColors.clear();
+	for (unsigned int i = 0; i < mesh->face_vertexIndices->size(); i++) {
+		vertexColors.push_back(1.0f); // R
+		//vertexColors.push_back(1.0f); // G
+		//vertexColors.push_back(1.0f); // B
+	}
+
+
+
+
+
+	// Colors
+	//vertexColors.clear();
+	//if (mesh->HasVertexColors(0)) {
+	//	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+	//		aiColor4D color = mesh->mColors[0][i];
+	//		vertexColors.push_back(color.r);
+	//		vertexColors.push_back(color.g);
+	//		vertexColors.push_back(color.b);
+	//	}
+	//}
+	//else {
+	//	std::cerr << "Mesh has no vertex colors, using default white color!" << std::endl;
+	//	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+	//		vertexColors.push_back(1.0f); // R
+	//		vertexColors.push_back(1.0f); // G
+	//		vertexColors.push_back(1.0f); // B
+	//	}
+	//}
 }

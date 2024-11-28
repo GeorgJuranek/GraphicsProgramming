@@ -41,13 +41,17 @@ int main(int argc, char* argv[])
 
 
 	//The Texture
-	Texture* texture = new Texture();
+	//Texture* texture = new Texture();
+	//texture->CreateTexture();
+	//texture->SetImage();
 
-	//SHADER PROGRAMMING lesson2
+
+	/*SHADER PROGRAMMING lesson2
 	//framework->SetClearColor(0,0,0,1);
 	//framework->SetFrontfaceDirection(GL_CCW); //GL_CounterClockWise// ,GL_CW);
 	//framework->EnableFaceCulling(GL_BACK); // ,GL_FRONT);
 	//framework->EnableDepthTest();
+	*/
 
 	//Infos to Console//
 	std::cout << "Hold 'r' to rotate the object.\n";
@@ -174,7 +178,7 @@ int main(int argc, char* argv[])
 				break;
 
 			case SDL_KEYUP:
-				system("cls");
+				//system("cls");
 				std::cout << "Light Position: " << light->position.x << " / " << light->position.y << " / " << light->position.z << '\n';
 				std::cout << "Camera Position: " << camera->position.x << " / " << camera->position.y << " / " << camera->position.z << '\n';
 				std::cout << "Object Rotation: " << mesh.GetRotation().x << " / " << mesh.GetRotation().y << " / " << mesh.GetRotation().z << '\n';

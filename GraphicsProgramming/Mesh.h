@@ -5,9 +5,15 @@
 #include "Shader.h"
 #include "Buffer.h"
 #include "Light.h"
+#include "MeshLoader.h"
 
 #include "Camera.h"
 #include <vector>
+
+
+#include <assimp/scene.h> 
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
 
 class Mesh
 {
@@ -43,6 +49,10 @@ public:
 	void SetPosition(float x, float y, float z);
 
 	glm::vec3 GetRotation(void);
+
+	//TEST
+	//void LoadFromAssimpMesh(aiMesh* mesh);
+	void LoadFromMeshData(MeshData* mesh);
 
 private:
 	Buffer positionBuffer, colorBuffer, indexBuffer;
