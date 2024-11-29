@@ -8,12 +8,6 @@
 //#include <GLFW/glfw3.h>
 #include "glm.hpp"
 
-//struct Vertex {
-//    glm::vec3 position;
-//    glm::vec3 normal;
-//};
-//
-//std::vector<Vertex> vertices;
 
 aiMesh* VertexLoader::LoadModel(const std::string& path) 
 {

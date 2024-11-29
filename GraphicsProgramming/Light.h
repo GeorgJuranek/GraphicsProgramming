@@ -21,7 +21,6 @@ public:
 private:
 
 	GLuint positionID, ambientID, diffuseID, specularID;
-	//void CreateBuffers();
 
 	glm::mat4 _model;
 	glm::mat4 _view;

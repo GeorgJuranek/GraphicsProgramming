@@ -10,8 +10,5 @@ public:
 	void ClearFromRAM();
 private:
 	GLuint textureID;
-	//SDL_Surface* surface;
-	/*int width;
-	int height;*/
 };
 

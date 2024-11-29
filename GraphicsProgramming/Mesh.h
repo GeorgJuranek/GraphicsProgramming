@@ -18,10 +18,6 @@
 class Mesh
 {
 public:
-	//std::array<GLfloat, 4 * 3> vertexPositions;
-	//std::array<GLfloat, 4 * 3> vertexColors;
-	//std::array<GLfloat, 4 * 3> vertexNormals;
-	//std::array<GLuint, 6> indices;
 	std::vector<GLfloat> vertexPositions;
 	std::vector<GLfloat> vertexColors;
 	std::vector<GLfloat> vertexNormals;
@@ -50,8 +46,6 @@ public:
 
 	glm::vec3 GetRotation(void);
 
-	//TEST
-	//void LoadFromAssimpMesh(aiMesh* mesh);
 	void LoadFromMeshData(MeshData* mesh);
 
 private:
@@ -77,7 +71,7 @@ private:
 	glm::vec3 _rotation;
 	glm::mat4 _model;
 	glm::mat3 _normal;
-	glm::mat4 _mvp;//glm::vec4 _mvp;
+	glm::mat4 _mvp;
 
 
 };

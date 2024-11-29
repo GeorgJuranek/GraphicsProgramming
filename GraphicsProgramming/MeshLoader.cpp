@@ -93,23 +93,22 @@ void MeshLoader::parseFaces(string line)
 	string prefix, vertex1, vertex2, vertex3, vertex4;
 
 	istringstream s(line);
-	s >> prefix >> vertex1 >> vertex2 >> vertex3 >> vertex4;  // Lies bis zu vier Vertizes
+	s >> prefix >> vertex1 >> vertex2 >> vertex3 >> vertex4;  // vertex4 if Quad
 
 	data->faceCount++;
 
-	// Standard-Dreieck
+	// Triangle
 	parseFace(vertex1);
 	parseFace(vertex2);
 	parseFace(vertex3);
 
-	// Prüfen, ob ein viertes Vertex existiert (für Vierecke)
+	// if Quad
 	if (!vertex4.empty()) {
-		// Zweites Dreieck für Vierecke (vertex1, vertex3, vertex4)
 		parseFace(vertex1);
 		parseFace(vertex3);
 		parseFace(vertex4);
 
-		data->faceCount++;  // Da ein zusätzliches Dreieck hinzugefügt wurde
+		data->faceCount++;
 	}
 }
 

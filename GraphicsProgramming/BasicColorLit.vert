@@ -67,7 +67,6 @@ void main(void)
 
 	//Result//
 	vec3 lighting = ambientLight + diffuseLight + specularLight;
-//	vec3 lighting = attenuation * (ambientLight + diffuseLight + specularLight);
 
 	colorOut = vec4(lighting, 1.0) * colorIn;
 

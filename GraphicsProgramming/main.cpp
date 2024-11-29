@@ -40,31 +40,17 @@ int main(int argc, char* argv[])
 	camera->Init();
 
 
-	//The Texture
-	//Texture* texture = new Texture();
-	//texture->CreateTexture();
-	//texture->SetImage();
-
-
-	/*SHADER PROGRAMMING lesson2
-	//framework->SetClearColor(0,0,0,1);
-	//framework->SetFrontfaceDirection(GL_CCW); //GL_CounterClockWise// ,GL_CW);
-	//framework->EnableFaceCulling(GL_BACK); // ,GL_FRONT);
-	//framework->EnableDepthTest();
-	*/
-
-	//Infos to Console//
+	//Infos to Console
 	std::cout << "Hold 'r' to rotate the object.\n";
 	std::cout << "Use 'W'A'S'D' to move the light.\n";
+	std::cout << "Use Arrow-keys to move the camera.\n";
 
 	// LOOP //
 	while (!framework->hasQuit)
 	{
-		//framework->CheckForClosingEvents();
 
 		// RENDERING //
 		glClearColor(1, 0.33, 0.33, 1);
-		//glClearColor(0, 0, 0, 0);
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -79,60 +65,7 @@ int main(int argc, char* argv[])
 			std::cerr << "framework window is missing";
 
 
-
 		//Transformation Tests
-
-		/*SDL_Keycode currentKey = Framework::GetCurrentKeyCode();
-
-		if (currentKey == SDL_KeyCode::SDLK_r)
-		{
-			mesh.Rotate(3,glm::vec3(0,1,1));
-			std::cout << "rotated\n";
-		}
-
-		if (currentKey == SDL_KeyCode::SDLK_w)
-		{
-			light->Translate(0, 0, -0.3);
-			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
-		}
-		
-		if (currentKey == SDL_KeyCode::SDLK_s)
-		{
-			light->Translate(0, 0, 0.3);
-			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
-		}
-
-		if (currentKey == SDL_KeyCode::SDLK_a)
-		{
-			light->Translate(-0.3, 0, 0);
-			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
-		}
-
-		if (currentKey == SDL_KeyCode::SDLK_d)
-		{
-			light->Translate(0.3, 0, 0);
-			std::cout << "translated\n" << light->position.x << " " << light->position.y << " " << light->position.z << " " << "\n";
-		}
-
-		//
-		if (currentKey == SDL_QUIT)
-		{
-			std::cout << "ModelViewer was closed";
-			framework->hasQuit = true;
-		}
-
-		if (currentKey == SDL_KEYDOWN)
-		{
-			SDL_Event events;
-			while (SDL_PollEvent(&events))
-			{
-				if (events.key.keysym.sym == SDLK_ESCAPE) //-> ESC
-				{
-					std::cout << "ModelViewer was closed";
-					framework->hasQuit = true;
-				}
-			}
-		}*/
 
 		SDL_Event events;
 		while (SDL_PollEvent(&events))
@@ -155,7 +88,7 @@ int main(int argc, char* argv[])
 				case SDLK_r:
 					mesh.Rotate(3, glm::vec3(0, 1, 1));
 					break;
-
+				//WASD for light
 				case SDLK_w:
 					light->Translate(0, 0, -0.3);
 					break;
@@ -170,6 +103,19 @@ int main(int argc, char* argv[])
 
 				case SDLK_d:
 					light->Translate(0.3, 0, 0);
+					break;
+				//Camera on arrowkeys
+				case SDLK_UP:
+					camera->Translate(0, 0, -0.3);
+					break;
+				case SDLK_DOWN:
+					camera->Translate(0, 0, 0.3);
+					break;
+				case SDLK_LEFT:
+					camera->Translate(-0.3, 0, 0);
+					break;
+				case SDLK_RIGHT:
+					camera->Translate(0.3, 0, 0);
 					break;
 
 				default:
@@ -189,8 +135,6 @@ int main(int argc, char* argv[])
 			}
 		}
 		
-
-		//std::cout << framework->GetCurrentKeyCode();
 	}
 
 

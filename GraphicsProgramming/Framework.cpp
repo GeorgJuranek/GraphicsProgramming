@@ -25,9 +25,6 @@ unsigned Framework::Init()
 	{
 		std::cerr << "GLEW Error:" << glewGetErrorString(glewStatus) << "\n";
 	}
-	//error = glewInit();
-	//Error::CheckError(error, "Framework failed to init glew");
-
 
 	if (window != nullptr)
 		std::cout << "Created window" << '\n';
@@ -72,7 +69,6 @@ unsigned Framework::MakeWindow()
 
 unsigned Framework::CreateContext()
 {
-	//SDL_GLContext context = nullptr;
 	context = SDL_GL_CreateContext(window);
 
 	if (context == nullptr)
@@ -102,47 +98,37 @@ void Framework::Close()
 	SDL_Quit();
 }
 
-void Framework::CheckForClosingEvents()
+void Framework::CheckForClosingEvents() //obsolete
 {
 	SDL_Event events;
-	//bool quit = false;
 
-	//while (hasQuit == false)
-	//{
-		while (SDL_PollEvent(&events))
+	while (SDL_PollEvent(&events))
+	{
+		switch (events.type)
 		{
-			switch (events.type)
+		case SDL_QUIT: //-> (x)
+			hasQuit = true;
+			break;
+
+
+		case SDL_KEYDOWN: 
+			if (events.key.keysym.sym == SDLK_ESCAPE) //-> ESC
 			{
-			case SDL_QUIT: //-> (x)
 				hasQuit = true;
-				break;
-
-
-			case SDL_KEYDOWN: 
-				if (events.key.keysym.sym == SDLK_ESCAPE) //-> ESC
-				{
-					hasQuit = true;
-				}
-				break;
-
-			default:
-				break;
 			}
-		}
-	//}
+			break;
 
-	//SDL_GL_SwapWindow(window);
-	//SDL_DestroyWindow(window);
+		default:
+			break;
+		}
+	}
 };
 
 
-bool Framework::CheckForKeyEvents(SDL_KeyCode keyCode)
+bool Framework::CheckForKeyEvents(SDL_KeyCode keyCode) //obsolete
 {
 	SDL_Event events;
-	//bool quit = false;
 
-	//while (hasQuit == false)
-	//{
 	while (SDL_PollEvent(&events))
 	{
 		switch (events.type)
@@ -158,13 +144,9 @@ bool Framework::CheckForKeyEvents(SDL_KeyCode keyCode)
 			return false;
 		}
 	}
-	//}
-
-	//SDL_GL_SwapWindow(window);
-	//SDL_DestroyWindow(window);
 };
 
-SDL_Keycode Framework::GetCurrentKeyCode()
+SDL_Keycode Framework::GetCurrentKeyCode() //obsolete
 {
 	SDL_Event events;
 
