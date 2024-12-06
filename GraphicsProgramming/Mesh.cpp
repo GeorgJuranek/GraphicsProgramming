@@ -5,7 +5,7 @@
 void Mesh::Init(Shader* shader, Material* material)
 {
 	MeshLoader* loader = MeshLoader::getInstance();
-	MeshData* mesh = loader->loadFromFile("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
+	MeshData* mesh = loader->loadFromFile("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
 
 	LoadFromMeshData(mesh);
 
@@ -23,29 +23,29 @@ void Mesh::Init(Shader* shader, Material* material)
 
 }
 
-void Mesh::Draw(Light* light)//TEST
-{
-	glUseProgram(shader->programID);
-
-	glUniform3fv(lightPositionID, 1, &(light->position.x));
-	glUniform3fv(lightAmbientID, 1, &(light->ambient.x));
-	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
-	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
-
-	//glUniform1f(lightAttenuationConstID, light->attenuationConst);
-	//glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
-	//glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
-
-	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
-	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
-	glUniform3fv(materialSpecularID, 1, &(material->specular.x));
-	glUniform1f(materialShininessID, material->shininess);
-
-
-	glBindVertexArray(vao);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-}
+//void Mesh::Draw(Light* light)//TEST
+//{
+//	glUseProgram(shader->programID);
+//
+//	glUniform3fv(lightPositionID, 1, &(light->position.x));
+//	glUniform3fv(lightAmbientID, 1, &(light->ambient.x));
+//	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
+//	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
+//
+//	//glUniform1f(lightAttenuationConstID, light->attenuationConst);
+//	//glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
+//	//glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
+//
+//	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
+//	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
+//	glUniform3fv(materialSpecularID, 1, &(material->specular.x));
+//	glUniform1f(materialShininessID, material->shininess);
+//
+//
+//	glBindVertexArray(vao);
+//	glDrawElements(GL_POINTS, indices.size(), GL_UNSIGNED_INT, 0);
+//	glBindVertexArray(0);
+//}
 
 void Mesh::Draw(Light* light, Camera* camera)
 {
@@ -93,7 +93,7 @@ void Mesh::Release()
 void Mesh::CreateBuffers()
 {
 	//VAO
-	glGenVertexArrays(1, &vao); //parameter: how many vao? Where to save gluint
+	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 
@@ -107,7 +107,7 @@ void Mesh::CreateBuffers()
 
 	positionBuffer.CreateBufferObject();
 	positionBuffer.Bind(GL_ARRAY_BUFFER);
-	positionBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), vertexPositions.data(), GL_STATIC_DRAW);
+	positionBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), &vertexPositions[0], GL_STATIC_DRAW);
 
 	positionBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
 	positionBuffer.EnableAttribute();
@@ -119,16 +119,22 @@ void Mesh::CreateBuffers()
 	colorBuffer.SetAttributeId(colorAttributeID);
 	colorBuffer.CreateBufferObject();
 	colorBuffer.Bind(GL_ARRAY_BUFFER);
-	colorBuffer.Fill(vertexColors.size() * sizeof(GLfloat), vertexColors.data(), GL_STATIC_DRAW);
+	colorBuffer.Fill(vertexColors.size() * sizeof(GLfloat), &vertexColors[0], GL_STATIC_DRAW);
 	colorBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
 	colorBuffer.EnableAttribute();
 
 
 	//BUFFER: indexbuffer
+	//indexBuffer = {};
+	//indexBuffer.CreateBufferObject();
+	//indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
+	//indexBuffer.Fill(indices.size() * sizeof(GLfloat), indices.data(), GL_STATIC_DRAW);
+
 	indexBuffer = {};
 	indexBuffer.CreateBufferObject();
 	indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
-	indexBuffer.Fill(indices.size() * sizeof(GLfloat), indices.data(), GL_STATIC_DRAW);
+	indexBuffer.Fill(indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+
 	/*indexbuffer doesnt need to LinkAttribute and EnableAttribute 
 	because its only for the sequence of indices*/
 
@@ -244,10 +250,10 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 		return;
 	}
 
-	for (unsigned int i = 0; i < mesh->faceCount; i++)
+	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
 	{
 			indices.push_back(mesh->face_vertexIndices->at(i));
-			indices.push_back(mesh->face_uvIndices->at(i));
+			//indices.push_back(mesh->face_uvIndices->at(i));
 			indices.push_back(mesh->face_normalIndices->at(i));
 	}
 

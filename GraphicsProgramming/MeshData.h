@@ -23,9 +23,9 @@ public:
 	vector<GLfloat>* normals;
 	vector<GLfloat>* texCoords;
 
-	vector<GLfloat>* face_vertexIndices;
-	vector<GLfloat>* face_normalIndices;
-	vector<GLfloat>* face_uvIndices;
+	vector<GLuint>* face_vertexIndices; //geändert von <GLfloat>
+	vector<GLuint>* face_normalIndices; //geändert von <GLfloat>
+	vector<GLuint>* face_uvIndices; //geändert von <GLfloat>
 
 	GLint faceCount;
 	string texturePath;

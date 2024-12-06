@@ -7,9 +7,10 @@
 #include "Mesh.h"
 #include "Texture.h"
 
+#include <string>
+
 int main(int argc, char* argv[])
 {
-    std::cout << "Graphics Programming Console:\n";
 
 
 	//The FRAMEWORK creates the window and the openGL context
@@ -34,6 +35,11 @@ int main(int argc, char* argv[])
 	Mesh mesh;
 	mesh.Init(shader, material);
 
+	////Texture
+	//Texture* texture = new Texture();
+	//texture->CreateTexture();
+	//texture->SetImage("Textures/BricksTexture.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
+
 
 	//The CAMERA
 	Camera* camera = new Camera();
@@ -41,6 +47,7 @@ int main(int argc, char* argv[])
 
 
 	//Infos to Console
+    std::cout << "Graphics Programming Console:\n";
 	std::cout << "Hold 'r' to rotate the object.\n";
 	std::cout << "Use 'W'A'S'D' to move the light.\n";
 	std::cout << "Use Arrow-keys to move the camera.\n";

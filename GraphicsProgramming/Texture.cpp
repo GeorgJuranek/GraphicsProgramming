@@ -4,8 +4,12 @@
 #include <SDL.h>
 #include <SDL_image.h> 
 #include <iostream>
+#include <string>
 
-//GLuint textureID;
+
+Texture::Texture()
+{
+}
 
 void Texture::CreateTexture()
 {
@@ -13,13 +17,35 @@ void Texture::CreateTexture()
 
 }
 
-void Texture::SetImage(char* file)
+void Texture::SetImage(std::string file)//char* file)
 {
-	SDL_Surface* surface = IMG_Load(file);
+	//Checks for SDL functionality
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+		std::cerr << "SDL couldn't be initialised: " << SDL_GetError() << "\n";
+		return;
+	}
+
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+	if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
+		std::cerr << "SDL_image couldn't be initialised: " << IMG_GetError() << "\n";
+		SDL_Quit();
+		return;
+	}
+	//
+
+	const char* charPointer = file.c_str();
+
+	SDL_Surface* surface = IMG_Load(charPointer); //IMG_Load(file); //!!!IMG_Load DOES NOT WORK! surface is NULL
+	//SDL_Surface* surface = SDL_LoadBMP(charPointer, "rb");
+	//SDL_LockSurface(surface);
 
 	if (!surface)
 	{
-		std::cerr << "Missing Texture! Couldn't be loaded from file.";
+		std::cerr << "\n\tMissing Texture! Couldn't be loaded from file.\n";
+		std::cerr << IMG_GetError() << "\n\n";
+
+		//IMG_Quit();
+		//SDL_Quit();
 		return;
 	}
 
@@ -40,6 +66,10 @@ void Texture::SetImage(char* file)
 
 	SDL_FreeSurface(surface);
 	glDeleteTextures(1, &textureID);
+
+	//
+	IMG_Quit();
+	SDL_Quit();
 }
 
 void Texture::ClearFromRAM()

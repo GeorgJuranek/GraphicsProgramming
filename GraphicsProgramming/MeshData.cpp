@@ -9,9 +9,9 @@ void MeshData::init()
 	vertexPositions = new vector<GLfloat>;
 	normals = new vector<GLfloat>;
 	texCoords = new	vector<GLfloat>;
-	face_vertexIndices = new vector<GLfloat>;
-	face_normalIndices = new vector<GLfloat>;
-	face_uvIndices = new vector<GLfloat>;
+	face_vertexIndices = new vector<GLuint>; //geändert von <GLfloat>
+	face_normalIndices = new vector<GLuint>; //geändert von <GLfloat>
+	face_uvIndices = new vector<GLuint>; //geändert von <GLfloat>
 }
 
 void MeshData::deInit()

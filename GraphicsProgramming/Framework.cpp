@@ -20,6 +20,9 @@ unsigned Framework::Init()
 	error = CreateContext();
 	Error::CheckError(error, "Framework failed to create Context");
 
+	//EnableFaceCulling(GL_FRONT);
+	//EnableDepthTest();
+
 	GLenum glewStatus = glewInit();
 	if (glewStatus != GLEW_OK)
 	{
@@ -178,6 +181,7 @@ void Framework::SetFrontfaceDirection(GLenum faceDirection)
 void Framework::EnableDepthTest()
 {
 	glEnable(GL_DEPTH_TEST); //clockwise or not clockwise indices drawing
+	glDepthFunc(GL_GEQUAL);
 }
 
 void Framework::ClearWindow()
