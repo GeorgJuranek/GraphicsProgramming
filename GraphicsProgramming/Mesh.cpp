@@ -253,8 +253,9 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
 	{
 			indices.push_back(mesh->face_vertexIndices->at(i));
+
 			//indices.push_back(mesh->face_uvIndices->at(i));
-			indices.push_back(mesh->face_normalIndices->at(i));
+			//indices.push_back(mesh->face_normalIndices->at(i));
 	}
 
 	//Add Color Information

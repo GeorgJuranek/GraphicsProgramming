@@ -52,14 +52,15 @@ int main(int argc, char* argv[])
 	std::cout << "Use 'W'A'S'D' to move the light.\n";
 	std::cout << "Use Arrow-keys to move the camera.\n";
 
+	glClearColor(1, 0.33, 0.33, 1);
+
 	// LOOP //
 	while (!framework->hasQuit)
 	{
 
 		// RENDERING //
-		glClearColor(1, 0.33, 0.33, 1);
 
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (light == nullptr || camera == nullptr)
 			std::cerr << "No light or camera was found during renderloop!\n";
