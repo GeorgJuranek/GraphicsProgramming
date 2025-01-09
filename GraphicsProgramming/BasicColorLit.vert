@@ -29,10 +29,12 @@ uniform Light light;
 in vec3 positionIn;
 in vec3 normalIn;
 in vec4 colorIn;
+in vec2 uvIn;//
 
 out vec3 positionOut;
 out vec3 normalOut;
 out vec4 colorOut;
+out vec2 uvOut;//
 
 
 uniform mat4 model;
@@ -68,7 +70,9 @@ void main(void)
 	//Result//
 	vec3 lighting = ambientLight + diffuseLight + specularLight;
 
-	colorOut = vec4(lighting, 1.0) * colorIn;
+	colorOut = vec4(lighting, 1.0);
+
+	uvOut = uvIn;//
 
 	gl_Position = mvp * vec4(positionIn, 1.0);
 

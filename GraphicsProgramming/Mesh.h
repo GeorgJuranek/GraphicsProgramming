@@ -23,10 +23,13 @@ public:
 	std::vector<GLfloat> vertexNormals;
 	std::vector<GLuint> indices;
 
+	std::vector<GLuint> uvIndices;
+	std::vector<GLuint> normalIndices;
+
 	Material* material = nullptr;
 	Shader* shader = nullptr;
 
-	void Init(Shader* shader, Material* material);
+	void Init(Shader* shader, Material* material, string meshFilePath);
 	void GetLightUniformIDs();
 	void GetMaterialUniformIDs();
 

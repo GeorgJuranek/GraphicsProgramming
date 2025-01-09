@@ -32,6 +32,8 @@ public:
 	void ClearWindow();
 	void SetClearColor(float, float, float, float);
 
+	bool isCursorLocked;
+	void LockCursor(bool);
 
 
 };

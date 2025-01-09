@@ -33,9 +33,11 @@ void Texture::SetImage(std::string file)//char* file)
 	}
 	//
 
-	const char* charPointer = file.c_str();
+	//const char* charPointer = file.c_str();
 
-	SDL_Surface* surface = IMG_Load(charPointer); //IMG_Load(file); //!!!IMG_Load DOES NOT WORK! surface is NULL
+	SDL_Surface* surface = IMG_Load(file.c_str()); //IMG_Load(file); //!!!IMG_Load DOES NOT WORK! surface is NULL
+	//32BIT PNGS verwenden!// ALSO NOT WORKING FROM ONE DAY TO ANOTHER
+	
 	//SDL_Surface* surface = SDL_LoadBMP(charPointer, "rb");
 	//SDL_LockSurface(surface);
 
@@ -68,8 +70,8 @@ void Texture::SetImage(std::string file)//char* file)
 	glDeleteTextures(1, &textureID);
 
 	//
-	IMG_Quit();
-	SDL_Quit();
+	//IMG_Quit();
+	//SDL_Quit();
 }
 
 void Texture::ClearFromRAM()

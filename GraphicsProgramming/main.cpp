@@ -33,12 +33,12 @@ int main(int argc, char* argv[])
 	//Can Draw itself dependent from light and camera
 	//Holds transformations like rotate,translate, scale
 	Mesh mesh;
-	mesh.Init(shader, material);
+	mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
 
-	////Texture
-	//Texture* texture = new Texture();
-	//texture->CreateTexture();
-	//texture->SetImage("Textures/BricksTexture.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
+	//Texture
+	Texture* texture = new Texture();
+	texture->CreateTexture();
+	texture->SetImage("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
 
 
 	//The CAMERA
@@ -49,8 +49,10 @@ int main(int argc, char* argv[])
 	//Infos to Console
     std::cout << "Graphics Programming Console:\n";
 	std::cout << "Hold 'r' to rotate the object.\n";
-	std::cout << "Use 'W'A'S'D' to move the light.\n";
-	std::cout << "Use Arrow-keys to move the camera.\n";
+	std::cout << "Use 'W'A'S'D' Arrow-keys to move the light.\n";
+	std::cout << "Use 'W'A'S'D' to move the camera.\n";
+	std::cout << "Click in the Window to go into 'Inside-mode'.\n";
+	std::cout << "Use 'Esc' to leave inside-mode and tap another time to close viewer.\n";
 
 	glClearColor(1, 0.33, 0.33, 1);
 
@@ -85,45 +87,66 @@ int main(int argc, char* argv[])
 				framework->hasQuit = true;
 				break;
 
+			case SDL_MOUSEMOTION:
+				if (framework -> isCursorLocked)
+					camera->ChangeViewFromMouse(events.motion.xrel, events.motion.yrel);
+				break;
+
 			case SDL_KEYDOWN:
 				switch (events.key.keysym.sym)
 				{
 				case SDLK_ESCAPE:
-					std::cout << "ModelViewer was closed\n";
-					framework->hasQuit = true;
+					if (framework->isCursorLocked)
+					{
+						std::cout << "Left Inside-Mode\n";
+						framework->LockCursor(false);
+					}
+					else
+					{
+						std::cout << "ModelViewer was closed\n";
+						framework->hasQuit = true;
+					}
 					break;
 
 				case SDLK_r:
-					mesh.Rotate(3, glm::vec3(0, 1, 1));
+					mesh.Rotate(3, glm::vec3(1, 1, 1));
 					break;
-				//WASD for light
-				case SDLK_w:
+				//Light on Arrow-keys
+				case SDLK_UP:
 					light->Translate(0, 0, -0.3);
 					break;
 
-				case SDLK_s:
+				case SDLK_DOWN:
 					light->Translate(0, 0, 0.3);
 					break;
 
-				case SDLK_a:
+				case SDLK_LEFT:
 					light->Translate(-0.3, 0, 0);
 					break;
 
-				case SDLK_d:
+				case SDLK_RIGHT:
 					light->Translate(0.3, 0, 0);
 					break;
-				//Camera on arrowkeys
-				case SDLK_UP:
+				//Camera on WASD
+				case SDLK_w:
 					camera->Translate(0, 0, -0.3);
 					break;
-				case SDLK_DOWN:
+				case SDLK_s:
 					camera->Translate(0, 0, 0.3);
 					break;
-				case SDLK_LEFT:
+				case SDLK_a:
 					camera->Translate(-0.3, 0, 0);
 					break;
-				case SDLK_RIGHT:
+				case SDLK_d:
 					camera->Translate(0.3, 0, 0);
+					break;
+				//ADDITIONALS like in Gameengine
+				case SDLK_q:
+					camera->Translate(0, -0.3, 0);
+					break;
+
+				case SDLK_e:
+					camera->Translate(0, 0.3, 0);
 					break;
 
 				default:
@@ -137,6 +160,11 @@ int main(int argc, char* argv[])
 				std::cout << "Camera Position: " << camera->position.x << " / " << camera->position.y << " / " << camera->position.z << '\n';
 				std::cout << "Object Rotation: " << mesh.GetRotation().x << " / " << mesh.GetRotation().y << " / " << mesh.GetRotation().z << '\n';
 				break;
+			
+			case SDL_MOUSEBUTTONDOWN:
+				if (events.button.button == SDL_BUTTON_LEFT && !framework->isCursorLocked)
+					std::cout << "Went into Inside-Mode\n";
+					framework->LockCursor(true);
 
 			default:
 				break;
@@ -153,3 +181,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+

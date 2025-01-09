@@ -2,10 +2,10 @@
 #include <gtc\matrix_transform.hpp>
 #include "VertexLoader.h"
 
-void Mesh::Init(Shader* shader, Material* material)
+void Mesh::Init(Shader* shader, Material* material, string meshFilePath)
 {
 	MeshLoader* loader = MeshLoader::getInstance();
-	MeshData* mesh = loader->loadFromFile("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
+	MeshData* mesh = loader->loadFromFile(meshFilePath);//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
 
 	LoadFromMeshData(mesh);
 
@@ -22,30 +22,6 @@ void Mesh::Init(Shader* shader, Material* material)
 	_model = glm::mat4(1.0);
 
 }
-
-//void Mesh::Draw(Light* light)//TEST
-//{
-//	glUseProgram(shader->programID);
-//
-//	glUniform3fv(lightPositionID, 1, &(light->position.x));
-//	glUniform3fv(lightAmbientID, 1, &(light->ambient.x));
-//	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
-//	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
-//
-//	//glUniform1f(lightAttenuationConstID, light->attenuationConst);
-//	//glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
-//	//glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
-//
-//	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
-//	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
-//	glUniform3fv(materialSpecularID, 1, &(material->specular.x));
-//	glUniform1f(materialShininessID, material->shininess);
-//
-//
-//	glBindVertexArray(vao);
-//	glDrawElements(GL_POINTS, indices.size(), GL_UNSIGNED_INT, 0);
-//	glBindVertexArray(0);
-//}
 
 void Mesh::Draw(Light* light, Camera* camera)
 {
@@ -252,18 +228,23 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 
 	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
 	{
-			indices.push_back(mesh->face_vertexIndices->at(i));
-
-			//indices.push_back(mesh->face_uvIndices->at(i));
-			//indices.push_back(mesh->face_normalIndices->at(i));
+		indices.push_back(mesh->face_vertexIndices->at(i));
+	}
+	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
+	{
+		uvIndices.push_back(mesh->face_uvIndices->at(i));
+	}
+	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
+	{
+		normalIndices.push_back(mesh->face_normalIndices->at(i));
 	}
 
 	//Add Color Information
 	vertexColors.clear();
 	for (unsigned int i = 0; i < vertexPositions.size(); i++) {
-		vertexColors.push_back(1.0f); // R
-		vertexColors.push_back(1.0f); // G
-		vertexColors.push_back(1.0f); // B
+		vertexColors.push_back(0.5f); // R
+		vertexColors.push_back(0.5f); // G
+		vertexColors.push_back(0.5f); // B
 	}
 
 

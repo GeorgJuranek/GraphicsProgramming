@@ -196,6 +196,23 @@ void Framework::SetClearColor(float, float, float, float)
 };
 
 
+//
+void Framework::LockCursor(bool isLocked)
+{
+	//Lock cursor
+	if (isLocked)
+	{
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+		isCursorLocked = true;
+	}
+	else
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		isCursorLocked = false;
+	}
+}
+
+
 
 
 
