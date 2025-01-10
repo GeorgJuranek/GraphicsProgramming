@@ -6,12 +6,12 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "ConsoleLoger.h"
 
 #include <string>
 
 int main(int argc, char* argv[])
 {
-
 
 	//The FRAMEWORK creates the window and the openGL context
 	Framework* framework = new Framework();
@@ -34,6 +34,8 @@ int main(int argc, char* argv[])
 	//Holds transformations like rotate,translate, scale
 	Mesh mesh;
 	mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");
 
 	//Texture
 	Texture* texture = new Texture();
@@ -47,12 +49,18 @@ int main(int argc, char* argv[])
 
 
 	//Infos to Console
-    std::cout << "Graphics Programming Console:\n";
-	std::cout << "Hold 'r' to rotate the object.\n";
-	std::cout << "Use 'W'A'S'D' Arrow-keys to move the light.\n";
-	std::cout << "Use 'W'A'S'D' to move the camera.\n";
-	std::cout << "Click in the Window to go into 'Inside-mode'.\n";
-	std::cout << "Use 'Esc' to leave inside-mode and tap another time to close viewer.\n";
+	std::cout << "\n";
+    std::cout << "#Graphics Programming Console#:\n";
+	std::cout << "|_Hold 'r' to rotate the object.\n";
+	std::cout << "|_Use Arrow-keys to move the light relative to coordinatesystem.\n";
+	std::cout << "|_Use 'W'A'S'D' to move the view.\n";
+	std::cout << "|_Use 'E' to move the view up and 'Q' to move view down.\n";
+	std::cout << "|_Click in the Window to go into 'Inside-mode' and look around with mouse.\n";
+	std::cout << "|_Use 'Esc' to leave inside-mode and tap 'Esc' another time to close viewer.\n";
+	std::cout << "\n";
+	
+	ConsoleLoger* updateLog = new ConsoleLoger();
+	updateLog->Init();
 
 	glClearColor(1, 0.33, 0.33, 1);
 
@@ -88,17 +96,20 @@ int main(int argc, char* argv[])
 				break;
 
 			case SDL_MOUSEMOTION:
-				if (framework -> isCursorLocked)
+				if (framework->isCursorLocked)
+				{
 					camera->ChangeViewFromMouse(events.motion.xrel, events.motion.yrel);
+				}
 				break;
 
 			case SDL_KEYDOWN:
 				switch (events.key.keysym.sym)
 				{
+
 				case SDLK_ESCAPE:
 					if (framework->isCursorLocked)
 					{
-						std::cout << "Left Inside-Mode\n";
+						//std::cout << "Left Inside-Mode\n";
 						framework->LockCursor(false);
 					}
 					else
@@ -156,15 +167,15 @@ int main(int argc, char* argv[])
 
 			case SDL_KEYUP:
 				//system("cls");
-				std::cout << "Light Position: " << light->position.x << " / " << light->position.y << " / " << light->position.z << '\n';
-				std::cout << "Camera Position: " << camera->position.x << " / " << camera->position.y << " / " << camera->position.z << '\n';
-				std::cout << "Object Rotation: " << mesh.GetRotation().x << " / " << mesh.GetRotation().y << " / " << mesh.GetRotation().z << '\n';
+				updateLog ->DisplayPositionsUpdate(light, mesh, camera, framework->isCursorLocked);
 				break;
 			
 			case SDL_MOUSEBUTTONDOWN:
 				if (events.button.button == SDL_BUTTON_LEFT && !framework->isCursorLocked)
-					std::cout << "Went into Inside-Mode\n";
+					//std::cout << "Went into Inside-Mode\n";
 					framework->LockCursor(true);
+
+				updateLog->DisplayPositionsUpdate(light, mesh, camera, framework->isCursorLocked);
 
 			default:
 				break;
@@ -179,6 +190,10 @@ int main(int argc, char* argv[])
 	mesh.Release();
 	delete framework;
 
+	delete updateLog;
+	updateLog = nullptr;
+
     return 0;
 }
+
 
