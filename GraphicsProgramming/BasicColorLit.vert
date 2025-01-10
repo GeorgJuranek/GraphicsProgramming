@@ -70,9 +70,9 @@ void main(void)
 	//Result//
 	vec3 lighting = ambientLight + diffuseLight + specularLight;
 
-	colorOut = vec4(lighting, 1.0);
-
+	//colorOut = vec4(lighting, 1.0);
 	uvOut = uvIn;//
+	//colorOut = colorIn*vec4(lighting,0);
 
 	gl_Position = mvp * vec4(positionIn, 1.0);
 

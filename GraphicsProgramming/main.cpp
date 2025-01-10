@@ -28,19 +28,21 @@ int main(int argc, char* argv[])
 	//The MATERIAL only holds information for the lighting (ambient, diffuse,...)
 	Material* material = new Material();
 
+
 	//The MESH creates the Buffers for itself (as vbo and gives it to vao)
 	//Gets necessary information from shader and material
 	//Can Draw itself dependent from light and camera
 	//Holds transformations like rotate,translate, scale
-	Mesh mesh;
-	mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");
-
 	//Texture
 	Texture* texture = new Texture();
 	texture->CreateTexture();
 	texture->SetImage("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
+
+	Mesh mesh;
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
+	mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Car.obj");
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");
 
 
 	//The CAMERA

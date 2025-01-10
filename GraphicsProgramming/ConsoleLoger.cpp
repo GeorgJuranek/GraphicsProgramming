@@ -23,14 +23,6 @@ void ConsoleLoger::DisplayPositionsUpdate(Light* light, Mesh mesh, Camera* camer
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    //COORD oldPosition;
-    //CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
-    //if (GetConsoleScreenBufferInfo(hConsole, &consoleInfo))
-    //{
-    //    oldPosition.X = 0;
-    //    oldPosition.Y = consoleInfo.dwCursorPosition.Y;
-    //}
-
     COORD position;
     position.X = 0;
     position.Y = consoleRowStart;
@@ -49,7 +41,5 @@ void ConsoleLoger::DisplayPositionsUpdate(Light* light, Mesh mesh, Camera* camer
         std::cout << "Is in inside-mode: " << (isInInsideMode ? "Yes" : "No ") << "\n";
         std::cout << "\n";
     }
-
-    //SetConsoleCursorPosition(hConsole, oldPosition);
 
 }

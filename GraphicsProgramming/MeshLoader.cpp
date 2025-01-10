@@ -189,7 +189,7 @@ void MeshLoader::parseNormals(string line)
 void MeshLoader::parseTextureCoordinates(string line)
 {
 	string prefix;
-	float u, v;
+	GLfloat u, v;
 
 	istringstream s(line);
 	s >> prefix >> u >> v;

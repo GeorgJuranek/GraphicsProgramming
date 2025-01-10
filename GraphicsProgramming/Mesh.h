@@ -19,7 +19,7 @@ class Mesh
 {
 public:
 	std::vector<GLfloat> vertexPositions;
-	std::vector<GLfloat> vertexColors;
+	std::vector<GLfloat> uvCoordinates;
 	std::vector<GLfloat> vertexNormals;
 	std::vector<GLuint> indices;
 
@@ -52,7 +52,7 @@ public:
 	void LoadFromMeshData(MeshData* mesh);
 
 private:
-	Buffer positionBuffer, colorBuffer, indexBuffer;
+	Buffer positionBuffer, uvBuffer, indexBuffer;
 	GLuint vao;
 	GLuint lightPositionID, lightAmbientID, lightDiffuseID, lightSpecularID;
 

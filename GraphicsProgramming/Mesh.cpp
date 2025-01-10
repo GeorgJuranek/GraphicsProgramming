@@ -62,7 +62,7 @@ void Mesh::Draw(Light* light, Camera* camera)
 void Mesh::Release()
 {
 	positionBuffer.Delete();
-	colorBuffer.Delete();
+	uvBuffer.Delete();
 	indexBuffer.Delete();
 }
 
@@ -89,15 +89,15 @@ void Mesh::CreateBuffers()
 	positionBuffer.EnableAttribute();
 
 
-	//COLOR BUFFER//
-	colorBuffer = {};
-	GLuint colorAttributeID = shader->GetAttributeLocation("colorIn");
-	colorBuffer.SetAttributeId(colorAttributeID);
-	colorBuffer.CreateBufferObject();
-	colorBuffer.Bind(GL_ARRAY_BUFFER);
-	colorBuffer.Fill(vertexColors.size() * sizeof(GLfloat), &vertexColors[0], GL_STATIC_DRAW);
-	colorBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
-	colorBuffer.EnableAttribute();
+	//UV BUFFER//
+	uvBuffer = {};
+	GLuint uvAttributeID = shader->GetAttributeLocation("uvIn");
+	uvBuffer.SetAttributeId(uvAttributeID);
+	uvBuffer.CreateBufferObject();
+	uvBuffer.Bind(GL_ARRAY_BUFFER);
+	uvBuffer.Fill(uvCoordinates.size() * sizeof(GLfloat), &uvCoordinates[0], GL_STATIC_DRAW);
+	uvBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
+	uvBuffer.EnableAttribute();
 
 
 	//BUFFER: indexbuffer
@@ -240,11 +240,17 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 	}
 
 	//Add Color Information
-	vertexColors.clear();
-	for (unsigned int i = 0; i < vertexPositions.size(); i++) {
-		vertexColors.push_back(0.5f); // R
-		vertexColors.push_back(0.5f); // G
-		vertexColors.push_back(0.5f); // B
+	uvCoordinates.clear();
+	for (unsigned int i = 0; i < uvIndices.size(); i++) 
+	{
+		//vertexColors.push_back(0.5f); // R
+		//vertexColors.push_back(0.5f); // G
+		//vertexColors.push_back(0.5f); // B
+
+
+		uvCoordinates.push_back(mesh -> texCoords-> at(uvIndices[i])); // R
+		//vertexColors.push_back(mesh-> texCoords->at(1));
+		//vertexColors.push_back(0.5f); // B
 	}
 
 
@@ -253,12 +259,13 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 	std::cout << "Vertices: " << vertexPositions.size() << std::endl;
 	std::cout << "Normals: " << vertexNormals.size() << std::endl;
 	std::cout << "Indices: " << indices.size() << std::endl;
-	std::cout << "Colors: " << vertexColors.size() << std::endl;
+	std::cout << "Colors: " << uvCoordinates.size() << std::endl;
 
-	if (vertexPositions.size() != vertexNormals.size()) {
+	if (vertexPositions.size() != vertexNormals.size()) 
+	{
 		std::cerr << "Warning: The number of vertices and normals do not match!" << std::endl;
 	}
-	if (vertexPositions.size() * 3 != vertexColors.size()) {
+	if (vertexPositions.size() * 3 != uvCoordinates.size()) {
 		std::cerr << "Warning: The number of vertices and colors do not match!" << std::endl;
 	}
 	if (indices.size() % 3 != 0) {
