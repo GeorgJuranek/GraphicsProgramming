@@ -15,33 +15,70 @@ int main(int argc, char* argv[])
 	std::cout << "#Initialization Logs#:\n";
 
 	//The FRAMEWORK creates the window and the openGL context
-	Framework* framework = new Framework();
-    framework->Init();
+	Framework* framework = nullptr;
 
-	//
+	if (framework == nullptr)
+		framework = new Framework();
+
+	if (framework != nullptr)
+		framework->Init();
+
+	//MARCUS FEEDBACK://
+	// Pointer Lifecycle
+	//<Datentyp>* <Bezeichner> = nullptr;
+	//if(<Bezeichner> == nullptr) <Bezeicher> = new <Datentyp>();
+	// 
+	//if(<Bezeichner> != nullptr) <Bezeichner>-><Methodenbezeichner>();
+	// 
+	//if(<Bezeichner> != nullptr)
+	//{
+	//	delete <Bezeichner>;
+	//	<Bezeichner> = nullptr;
+	//}
 
 	//The LIGHT
-	Light* light = new Light();
-	light->Init();
+	Light* light = nullptr;
+
+	if (light == nullptr) 
+		light = new Light();
+
+	if (light != nullptr) 
+		light->Init();
 
 	//The SHADER creates the shaderProgram from the .vert(vertices) and .frag(fragment =color) glsl code
-	Shader* shader = new Shader();
-	shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //shader->Init("Basic.vert", "Basic.frag"); 
+	Shader* shader = nullptr;
+
+	if (shader == nullptr)
+		shader = new Shader();
+
+	if (shader != nullptr)
+		shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //shader->Init("Basic.vert", "Basic.frag"); 
 
 	//The MATERIAL only holds information for the lighting (ambient, diffuse,...)
-	Material* material = new Material();
+	Material* material = nullptr;
 
+	if (material == nullptr)
+		material = new Material();
+
+
+	//Texture
+	Texture* texture = nullptr;
+
+	if(texture == nullptr)
+		texture = new Texture();
+
+	if (texture != nullptr)
+	{
+		texture->CreateTexture();
+		texture->SetImage("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
+	}
 
 	//The MESH creates the Buffers for itself (as vbo and gives it to vao)
 	//Gets necessary information from shader and material
 	//Can Draw itself dependent from light and camera
 	//Holds transformations like rotate,translate, scale
-	//Texture
-	Texture* texture = new Texture();
-	texture->CreateTexture();
-	texture->SetImage("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
-
 	Mesh mesh;
+
 	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
 	mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Car.obj");
 	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
@@ -49,8 +86,13 @@ int main(int argc, char* argv[])
 
 
 	//The CAMERA
-	Camera* camera = new Camera();
-	camera->Init();
+	Camera* camera = nullptr;
+
+	if (camera == nullptr)
+		camera = new Camera();
+
+	if (camera != nullptr)
+		camera->Init();
 
 
 	//Infos to Console
@@ -64,10 +106,17 @@ int main(int argc, char* argv[])
 	std::cout << "|_Use 'Esc' to leave inside-mode and tap 'Esc' another time to close viewer.\n";
 	std::cout << "\n";
 	
-	ConsoleLoger* updateLog = new ConsoleLoger();
-	updateLog->Init();
+	//ConsoleLoger to Update transform values in Console
+	ConsoleLoger* updateLog = nullptr;
 
-	glClearColor(1, 0.33, 0.33, 1);
+	if (updateLog == nullptr)
+		updateLog = new ConsoleLoger();
+
+	if (updateLog != nullptr)
+		updateLog->Init();
+
+	//Background Color
+	glClearColor(1, 0.33, 0.33, 1); 
 
 	// LOOP //
 	while (!framework->hasQuit)

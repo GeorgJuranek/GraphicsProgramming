@@ -72,22 +72,27 @@ void Mesh::CreateBuffers()
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-
 	//BUFFER: positionbuffer
 	positionBuffer = {};
-
 	const GLchar* attributeName = "positionIn";
 	GLuint attributeID = shader->GetAttributeLocation(attributeName);
-
 	positionBuffer.SetAttributeId(attributeID);
-
 	positionBuffer.CreateBufferObject();
 	positionBuffer.Bind(GL_ARRAY_BUFFER);
 	positionBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), &vertexPositions[0], GL_STATIC_DRAW);
-
-	positionBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
+	positionBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 48, reinterpret_cast<void*>(0)); //reinterpret cast: to binary and back
 	positionBuffer.EnableAttribute();
 
+	//Color Buffer
+	colorBuffer = {};
+	const GLchar* attributeColorName = "colorIn";
+	GLuint attributeColorID = shader->GetAttributeLocation(attributeColorName);
+	colorBuffer.SetAttributeId(attributeColorID);
+	colorBuffer.CreateBufferObject();
+	colorBuffer.Bind(GL_ARRAY_BUFFER);
+	colorBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), &vertexPositions[0], GL_STATIC_DRAW);
+	colorBuffer.LinkAttribute(4, GL_FLOAT, GL_FALSE, 48, reinterpret_cast<void*>(0+12)); //reinterpret cast: to binary and back
+	colorBuffer.EnableAttribute();
 
 	//UV BUFFER//
 	uvBuffer = {};
@@ -96,21 +101,26 @@ void Mesh::CreateBuffers()
 	uvBuffer.CreateBufferObject();
 	uvBuffer.Bind(GL_ARRAY_BUFFER);
 	uvBuffer.Fill(uvCoordinates.size() * sizeof(GLfloat), &uvCoordinates[0], GL_STATIC_DRAW);
-	uvBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
+	uvBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 48, reinterpret_cast<void*>(0+12+16));
 	uvBuffer.EnableAttribute();
+
+	//Normals Buffer
+	normalBuffer = {};
+	const GLchar* attributeNormalName = "normalIn";
+	GLuint attributeNormalID = shader->GetAttributeLocation(attributeNormalName);
+	normalBuffer.SetAttributeId(attributeNormalID);
+	normalBuffer.CreateBufferObject();
+	normalBuffer.Bind(GL_ARRAY_BUFFER);
+	normalBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), &vertexNormals[0], GL_STATIC_DRAW);
+	normalBuffer.LinkAttribute(4, GL_FLOAT, GL_FALSE, 48, reinterpret_cast<void*>(0 + 12 + 16 + 6)); //reinterpret cast: to binary and back
+	normalBuffer.EnableAttribute();
 
 
 	//BUFFER: indexbuffer
-	//indexBuffer = {};
-	//indexBuffer.CreateBufferObject();
-	//indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
-	//indexBuffer.Fill(indices.size() * sizeof(GLfloat), indices.data(), GL_STATIC_DRAW);
-
 	indexBuffer = {};
 	indexBuffer.CreateBufferObject();
 	indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
 	indexBuffer.Fill(indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
-
 	/*indexbuffer doesnt need to LinkAttribute and EnableAttribute 
 	because its only for the sequence of indices*/
 

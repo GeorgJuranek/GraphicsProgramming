@@ -27,6 +27,9 @@ void Buffer::Fill(GLsizeiptr size, const void* data, GLenum usage)
 	glBufferData(this->target, size, data, usage);
 }
 
+// size = wie viele floats
+// stride = wie viele Bytes ist mein Vertex groﬂ
+// pointer = wie viele bytes von der startadresse des vertex muss ich nach vorne springen um Position/Color/TexCoord etc zu erreichen
 void Buffer::LinkAttribute(GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer)
 {
 	glVertexAttribPointer(attributeID, size, type, normalized, stride, pointer);
