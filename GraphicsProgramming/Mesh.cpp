@@ -243,14 +243,11 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 	uvCoordinates.clear();
 	for (unsigned int i = 0; i < uvIndices.size(); i++) 
 	{
-		//vertexColors.push_back(0.5f); // R
-		//vertexColors.push_back(0.5f); // G
-		//vertexColors.push_back(0.5f); // B
+		//uvCoordinates.push_back(0.5f); // R
+		//uvCoordinates.push_back(0.5f); // G
+		//uvCoordinates.push_back(0.5f); // B
 
-
-		uvCoordinates.push_back(mesh -> texCoords-> at(uvIndices[i])); // R
-		//vertexColors.push_back(mesh-> texCoords->at(1));
-		//vertexColors.push_back(0.5f); // B
+		uvCoordinates.push_back(mesh -> texCoords-> at(uvIndices[i]));
 	}
 
 

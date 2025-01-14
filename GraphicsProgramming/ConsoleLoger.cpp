@@ -15,7 +15,7 @@ void ConsoleLoger::Init()
 	if (GetConsoleScreenBufferInfo(hConsole, &consoleInfo)) 
 	{
 		consoleRowStart = consoleInfo.dwCursorPosition.Y;
-		consoleRowEnd = consoleRowStart + 2;
+		//consoleRowEnd = consoleRowStart + 6;
 	}
 }
 
@@ -32,14 +32,19 @@ void ConsoleLoger::DisplayPositionsUpdate(Light* light, Mesh mesh, Camera* camer
     }
     else
     {
-        std::cout << "\n";
-        std::cout << "\n#TRANSFORMS#:\n";
+        std::cout << "#TRANSFORMS#:\n";
 	    std::cout << ">Light Position: " << light->position.x << " / " << light->position.y << " / " << light->position.z << '\n';
 	    std::cout << ">Camera Position: " << camera->position.x << " / " << camera->position.y << " / " << camera->position.z << '\n';
 	    std::cout << ">Object Rotation: " << mesh.GetRotation().x << " / " << mesh.GetRotation().y << " / " << mesh.GetRotation().z << '\n';
         std::cout << "\n";
-        std::cout << "Is in inside-mode: " << (isInInsideMode ? "Yes" : "No ") << "\n";
+        std::cout << "Is in inside-mode: " << (isInInsideMode ? "Yes" : "No ");
         std::cout << "\n";
     }
 
+    //BUG NOTE:
+    /*
+    the Program freezes when cursor position is changed manually in 
+    console window and then clicked on window to enter inside-mode (no mouse rotation or anything possible).
+    Can only be closed when (for example) i call the task manager, so i get the cursor back and then quit it through visualstudio
+    */
 }

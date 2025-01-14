@@ -32,15 +32,10 @@ void Texture::SetImage(std::string file)//char* file)
 		SDL_Quit();
 		return;
 	}
-	//
 
-	//const char* charPointer = file.c_str();
-
-	SDL_Surface* surface = IMG_Load(file.c_str()); //IMG_Load(file); //!!!IMG_Load DOES NOT WORK! surface is NULL
-	//32BIT PNGS verwenden!// ALSO NOT WORKING FROM ONE DAY TO ANOTHER
+	SDL_Surface* surface = IMG_Load(file.c_str());
+	//32BIT PNGS verwenden!//
 	
-	//SDL_Surface* surface = SDL_LoadBMP(charPointer, "rb");
-	//SDL_LockSurface(surface);
 
 	if (!surface)
 	{

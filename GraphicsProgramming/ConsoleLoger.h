@@ -11,6 +11,6 @@ class ConsoleLoger
 
 	private:
 		int consoleRowStart;
-		int consoleRowEnd;
+		//int consoleRowEnd;
 };
 

@@ -15,8 +15,8 @@
 #version 460
 
 in vec3 positionOut;
-in vec3 normalOut;
-in vec4 colorOut;
+//in vec3 normalOut;
+//in vec4 colorOut;
 in vec2 uvOut;
 
 out vec4 FragColor;
@@ -31,12 +31,3 @@ void main()
 }
 
 
-//#version 460
-//
-//in vec4 colorOut;
-//out vec4 pixelColor;
-//
-//void main(void)
-//{
-//	pixelColor = colorOut;
-//}

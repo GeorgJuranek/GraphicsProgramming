@@ -12,10 +12,13 @@
 
 int main(int argc, char* argv[])
 {
+	std::cout << "#Initialization Logs#:\n";
 
 	//The FRAMEWORK creates the window and the openGL context
 	Framework* framework = new Framework();
     framework->Init();
+
+	//
 
 	//The LIGHT
 	Light* light = new Light();
@@ -52,7 +55,7 @@ int main(int argc, char* argv[])
 
 	//Infos to Console
 	std::cout << "\n";
-    std::cout << "#Graphics Programming Console#:\n";
+    std::cout << "#Graphics Programming Console Instructions#:\n";
 	std::cout << "|_Hold 'r' to rotate the object.\n";
 	std::cout << "|_Use Arrow-keys to move the light relative to coordinatesystem.\n";
 	std::cout << "|_Use 'W'A'S'D' to move the view.\n";
