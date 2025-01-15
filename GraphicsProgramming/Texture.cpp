@@ -61,8 +61,8 @@ void Texture::SetImage(std::string file)//char* file)
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	SDL_FreeSurface(surface);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//SDL_FreeSurface(surface);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	//
 	//IMG_Quit();

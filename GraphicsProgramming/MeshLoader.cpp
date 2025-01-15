@@ -95,21 +95,25 @@ void MeshLoader::parseFaces(string line)
 	istringstream s(line);
 	s >> prefix >> vertex1 >> vertex2 >> vertex3 >> vertex4;  // vertex4 if Quad
 
-	data->faceCount++;
-
-	// Triangle
-	parseFace(vertex1);
-	parseFace(vertex2);
-	parseFace(vertex3);
+	//data->faceCount++;
 
 	// if Quad
 	if (!vertex4.empty()) {
 		parseFace(vertex1);
+		parseFace(vertex2);
 		parseFace(vertex3);
 		parseFace(vertex4);
 
-		data->faceCount++;
 	}
+	else
+	{
+		// Triangle
+		parseFace(vertex1);
+		parseFace(vertex2);
+		parseFace(vertex3);
+	}
+
+	data->faceCount++;
 }
 
 /// <summary>
@@ -196,7 +200,7 @@ void MeshLoader::parseTextureCoordinates(string line)
 
 	//XMFLOAT2* texCoord = new XMFLOAT2(u, v);
 	data->texCoords->push_back(u);
-	data->texCoords->push_back(v);
+	data->texCoords->push_back(1-v);
 }
 
 /// <summary>

@@ -96,7 +96,7 @@ void Mesh::CreateBuffers()
 	uvBuffer.CreateBufferObject();
 	uvBuffer.Bind(GL_ARRAY_BUFFER);
 	uvBuffer.Fill(uvCoordinates.size() * sizeof(GLfloat), &uvCoordinates[0], GL_STATIC_DRAW);
-	uvBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
+	uvBuffer.LinkAttribute(2, GL_FLOAT, GL_FALSE, 0, 0);
 	uvBuffer.EnableAttribute();
 
 
@@ -241,7 +241,7 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 
 	//Add Color Information
 	uvCoordinates.clear();
-	for (unsigned int i = 0; i < uvIndices.size(); i++) 
+	for (unsigned int i = 0; i < mesh->texCoords->size(); i++)
 	{
 		//uvCoordinates.push_back(0.5f); // R
 		//uvCoordinates.push_back(0.5f); // G
@@ -256,7 +256,7 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 	std::cout << "Vertices: " << vertexPositions.size() << std::endl;
 	std::cout << "Normals: " << vertexNormals.size() << std::endl;
 	std::cout << "Indices: " << indices.size() << std::endl;
-	std::cout << "Colors: " << uvCoordinates.size() << std::endl;
+	std::cout << "UV coordinates: " << uvCoordinates.size() << std::endl;
 
 	if (vertexPositions.size() != vertexNormals.size()) 
 	{
