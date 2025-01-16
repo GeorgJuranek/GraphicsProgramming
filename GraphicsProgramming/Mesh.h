@@ -52,7 +52,7 @@ public:
 	void LoadFromMeshData(MeshData* mesh);
 
 private:
-	Buffer positionBuffer, uvBuffer, indexBuffer;
+	Buffer positionBuffer, uvBuffer, indexBuffer, colorBuffer, normalBuffer;
 	GLuint vao;
 	GLuint lightPositionID, lightAmbientID, lightDiffuseID, lightSpecularID;
 

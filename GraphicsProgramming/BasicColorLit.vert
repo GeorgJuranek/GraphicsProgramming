@@ -73,7 +73,7 @@ void main(void)
 //	//colorOut = vec4(lighting, 1.0);
 	uvOut = uvIn;//
 //	//colorOut = colorIn*vec4(lighting,0);
-
+//colorOut = colorIn;
 	gl_Position = mvp * vec4(positionIn, 1.0);
 
 }
