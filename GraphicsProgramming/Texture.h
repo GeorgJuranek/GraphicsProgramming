@@ -11,7 +11,8 @@ public:
 	void CreateTexture();
 	void SetImage(std::string file);//char* file);
 	void ClearFromRAM();
-private:
 	GLuint textureID;
+
+private:
 };
 

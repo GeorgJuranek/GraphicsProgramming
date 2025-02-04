@@ -19,18 +19,27 @@ int main(int argc, char* argv[])
     framework->Init();
 
 	//
+	//The SHADER creates the shaderProgram from the .vert(vertices) and .frag(fragment =color) glsl code
+	Shader* shader = new Shader();
+	shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //shader->Init("Basic.vert", "Basic.frag"); 
+
 
 	//The LIGHT
 	Light* light = new Light();
 	light->Init();
 
-	//The SHADER creates the shaderProgram from the .vert(vertices) and .frag(fragment =color) glsl code
-	Shader* shader = new Shader();
-	shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //shader->Init("Basic.vert", "Basic.frag"); 
-
 	//The MATERIAL only holds information for the lighting (ambient, diffuse,...)
 	Material* material = new Material();
 
+	Mesh mesh;
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
+	mesh.Init(shader, material, "Models/basicCube.obj");
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
+	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");
+
+	//The CAMERA
+	Camera* camera = new Camera();
+	camera->Init();
 
 	//The MESH creates the Buffers for itself (as vbo and gives it to vao)
 	//Gets necessary information from shader and material
@@ -39,18 +48,9 @@ int main(int argc, char* argv[])
 	//Texture
 	Texture* texture = new Texture();
 	texture->CreateTexture();
-	texture->SetImage("C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
-
-	Mesh mesh;
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
-	mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Car.obj");
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");
+	texture->SetImage("Textures/car.png");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
 
 
-	//The CAMERA
-	Camera* camera = new Camera();
-	camera->Init();
 
 
 	//Infos to Console
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 		if (light == nullptr || camera == nullptr)
 			std::cerr << "No light or camera was found during renderloop!\n";
 		else
-			mesh.Draw(light, camera);
+			mesh.Draw(light, camera, texture);
 
 		if (framework->window != nullptr)
 			framework->SwapWindow();

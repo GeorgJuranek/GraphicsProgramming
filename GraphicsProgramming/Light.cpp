@@ -5,14 +5,14 @@
 
 void Light::Init()
 {
-	position = glm::vec3(0.0f, 0.0f, -10.0f);
-	ambient = glm::vec3(0.3f, 0.3f, 0.3f);
-	diffuse = glm::vec3(0.3f, 0.3f, 0.3f);
-	specular = glm::vec3(0.3f, 0.3f, 0.3f);
+	position = glm::vec3(0.0f, 1.0f, 2.0f);
+	ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+	specular = glm::vec3(1.0f, 1.0f, 1.0f);
 
-	//attenuationConst = 1.0f;
-	//attenuationLinear = 0.3f;
-	//attenuationQuad = 0.1f;
+	attenuationConst = 0.05f;
+	attenuationLinear = 0.05f;
+	attenuationQuad = 0.05f;
 
 }
 

@@ -31,5 +31,6 @@ private:
 	//void calculateTangentAndBitangent();
 
 	MeshData* data;
+	int faceCount;
 };
 

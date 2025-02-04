@@ -1,6 +1,8 @@
 #include "MeshLoader.h"
 #include <GL\glew.h>
 
+#include "Mesh.h"
+
 using namespace std;
 
 MeshLoader* MeshLoader::_pInstance = nullptr;
@@ -30,6 +32,8 @@ MeshLoader::~MeshLoader()
 /// </summary>
 MeshData* MeshLoader::loadFromFile(string filename)
 {
+	faceCount = 0;
+
 	data = new MeshData{};
 	data->init();
 
@@ -71,6 +75,12 @@ void MeshLoader::parseLineFaces(string line)
 	if (line.substr(0, 1) == "f")
 	{
 		parseFaces(line);
+	}
+
+
+	for (int i = 0; i < faceCount; i++)
+	{
+		data->indices->push_back(i);
 	}
 }
 
@@ -123,23 +133,31 @@ void MeshLoader::parseFaces(string line)
 /// </summary>
 void MeshLoader::parseFace(string currentVertex)
 {
-	//Vertex* vertex = new Vertex{};
+	faceCount++;
+
+	Vertex* vertex = new Vertex{};
 
 	GLuint firstSlash = (GLuint)currentVertex.find_first_of("/");
 	GLuint secondSlash = (GLuint)currentVertex.find_last_of("/");
 
 	string vertexIndexString = currentVertex.substr(0, firstSlash);
 	GLuint vertexIndex = atoi(vertexIndexString.c_str()) - 1;
-	data->face_vertexIndices->push_back(vertexIndex);
-	data->indexCount++;
+	vertex->position = (data->vertexPositions[vertexIndex]);
+	//data->face_vertexIndices->push_back(vertexIndex);
+	//data->indexCount++;
 
 	string uvIndexString = currentVertex.substr(firstSlash + 1, secondSlash - firstSlash + 1);
 	GLuint uvIndex = atoi(uvIndexString.c_str()) - 1;
-	data->face_uvIndices->push_back(uvIndex);
+	//data->face_uvIndices->push_back(uvIndex);
+	vertex->uvCoordinate = data->texCoords[uvIndex];
 
 	string normalIndexString = currentVertex.substr(secondSlash + 1);
 	GLuint normalIndex = atoi(normalIndexString.c_str()) - 1;
-	data->face_normalIndices->push_back(normalIndex);
+	//data->face_normalIndices->push_back(normalIndex);
+	vertex->normal = data->normals[normalIndex];
+
+
+	data->vertices->push_back(*vertex);
 
 	/*vertex->position = data->vertexPositions->at(vertexIndex);
 	vertex->normal = data->normals->at(normalIndex);
@@ -164,10 +182,15 @@ void MeshLoader::parseVertices(string line)
 	s >> prefix >> x >> y >> z;
 
 	//XMFLOAT3* v = new XMFLOAT3(x, y, z);
-	data->vertexPositions->push_back(x);
+
+	glm::vec3 position = glm::vec3(x, y, z);
+
+	data->vertexPositions.push_back(position);
+
+	/*data->vertexPositions->push_back(x);
 	data->vertexPositions->push_back(y);
 	data->vertexPositions->push_back(z);
-	data->vertexCount++;
+	data->vertexCount++;*/
 }
 
 /// <summary>
@@ -182,9 +205,12 @@ void MeshLoader::parseNormals(string line)
 	s >> prefix >> x >> y >> z;
 
 	//XMFLOAT3* normal = new XMFLOAT3(x, y, z);
-	data->normals->push_back(x);
-	data->normals->push_back(y);
-	data->normals->push_back(z);
+
+	glm::vec3 normal = glm::vec3(x, y, z);
+
+	data->normals.push_back(normal);
+	//data->normals->push_back(y);
+	//data->normals->push_back(z);
 }
 
 /// <summary>
@@ -198,9 +224,12 @@ void MeshLoader::parseTextureCoordinates(string line)
 	istringstream s(line);
 	s >> prefix >> u >> v;
 
+	glm::vec2 uv = glm::vec2(u, v);
+	data->texCoords.push_back(uv);
+
 	//XMFLOAT2* texCoord = new XMFLOAT2(u, v);
-	data->texCoords->push_back(u);
-	data->texCoords->push_back(1-v);
+	//data->texCoords->push_back(u);
+	//data->texCoords->push_back(1-v);
 }
 
 /// <summary>

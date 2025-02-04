@@ -5,9 +5,9 @@
 void Mesh::Init(Shader* shader, Material* material, string meshFilePath)
 {
 	MeshLoader* loader = MeshLoader::getInstance();
-	MeshData* mesh = loader->loadFromFile(meshFilePath);//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
+	data = loader->loadFromFile(meshFilePath);//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");//meshFilePath);//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");//"C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/CustomCube.obj");//
 
-	LoadFromMeshData(mesh);
+	LoadFromMeshData(data);
 
 	this->shader = shader;
 	this->material = material;
@@ -23,7 +23,7 @@ void Mesh::Init(Shader* shader, Material* material, string meshFilePath)
 
 }
 
-void Mesh::Draw(Light* light, Camera* camera)
+void Mesh::Draw(Light* light, Camera* camera, Texture* texture)
 {
 	glUseProgram(shader->programID);
 
@@ -32,13 +32,14 @@ void Mesh::Draw(Light* light, Camera* camera)
 	glUniform3fv(lightDiffuseID, 1, &(light->diffuse.x));
 	glUniform3fv(lightSpecularID, 1, &(light->specular.x));
 
-	//glUniform1f(lightAttenuationConstID, light->attenuationConst);
-	//glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
-	//glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
+	glUniform1f(lightAttenuationConstID, light->attenuationConst);
+	glUniform1f(lightAttenuationLinearID, light->attenuationLinear);
+	glUniform1f(lightAttenuationQuadID, light->attenuationQuad);
 
 	glUniform3fv(materialAmbientID, 1, &(material->ambient.x));
 	glUniform3fv(materialDiffuseID, 1, &(material->diffuse.x));
 	glUniform3fv(materialSpecularID, 1, &(material->specular.x));
+
 	glUniform1f(materialShininessID, material->shininess);
 
 	glUniformMatrix4fv(modelID, 1, GL_FALSE, &(_model[0][0]));
@@ -52,10 +53,13 @@ void Mesh::Draw(Light* light, Camera* camera)
 
 	glUniform3fv(cameraPositionID, 1, &(camera->position.x));
 
+	glBindTexture(GL_TEXTURE_2D, texture->textureID);
 
 
 	glBindVertexArray(vao);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, data->indices->size(), GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
 }
 
@@ -72,61 +76,75 @@ void Mesh::CreateBuffers()
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
+	GLuint vbo;
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, data->vertices->size() * sizeof(Vertex), data->vertices->data(), GL_STATIC_DRAW);
+
+	//ToDO: elementBuffer erstellen, attribute erstellen, pos uv normals/ ohne buffer klasse
+
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, data->vertices->size() * sizeof(Vertex), data->vertices->data(), GL_STATIC_DRAW);
+
 
 	//BUFFER: positionbuffer
-	positionBuffer = {};
+	/*positionBuffer = {};
 
 	const GLchar* attributeName = "positionIn";
 	GLuint attributeID = shader->GetAttributeLocation(attributeName);
-	positionBuffer.SetAttributeId(attributeID);
+	positionBuffer.SetAttributeId(attributeName, attributeID);
 	positionBuffer.CreateBufferObject();
 	positionBuffer.Bind(GL_ARRAY_BUFFER);
-	positionBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), &vertexPositions[0], GL_STATIC_DRAW);
+	positionBuffer.Fill(vertexPositions.size() * sizeof(GLfloat), vertexPositions.data(), GL_STATIC_DRAW);
 	positionBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0);
-	positionBuffer.EnableAttribute();
+	positionBuffer.EnableAttribute();*/
 
-	//colorBuffer = {};
-	//const GLchar* attributeColorName = "colorIn";
-	//GLuint attributeColorID = shader->GetAttributeLocation(attributeColorName);
-	//colorBuffer.SetAttributeId(attributeColorID);
-	//colorBuffer.CreateBufferObject();
-	//colorBuffer.Bind(GL_ARRAY_BUFFER);
-	//colorBuffer.Fill(color.size() * sizeof(GLfloat), &vertexPositions[0], GL_STATIC_DRAW);
-	//colorBuffer.LinkAttribute(4, GL_FLOAT, GL_FALSE, 0, 0); //reinterpret cast: to binary and back
-	//colorBuffer.EnableAttribute();
+	//normalBuffer = {};
+	//const GLchar* attributeNormalName = "normalIn";
+	//GLuint attributeNormalID = shader->GetAttributeLocation(attributeNormalName);
+	//normalBuffer.SetAttributeId(attributeNormalName, attributeNormalID);
+	//normalBuffer.CreateBufferObject();
+	//normalBuffer.Bind(GL_ARRAY_BUFFER);
+	//normalBuffer.Fill(vertexNormals.size() * sizeof(GLfloat), vertexNormals.data(), GL_STATIC_DRAW);
+	//normalBuffer.LinkAttribute(3, GL_FLOAT, GL_TRUE, 0, 0); //reinterpret cast: to binary and back
+	//normalBuffer.EnableAttribute();
 
-	//UV BUFFER//
-	uvBuffer = {};
-	GLuint uvAttributeID = shader->GetAttributeLocation("uvIn");
-	uvBuffer.SetAttributeId(uvAttributeID);
-	uvBuffer.CreateBufferObject();
-	uvBuffer.Bind(GL_ARRAY_BUFFER);
-	uvBuffer.Fill(uvCoordinates.size() * sizeof(GLfloat), &uvCoordinates[0], GL_STATIC_DRAW);
-	uvBuffer.LinkAttribute(2, GL_FLOAT, GL_FALSE, 0,0);
-	uvBuffer.EnableAttribute();
+	//indexBuffer = {};
+	//indexBuffer.CreateBufferObject();
+	//indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
+	//indexBuffer.Fill(indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+	///*indexbuffer doesnt need to LinkAttribute and EnableAttribute 
+	//because its only for the sequence of indices*/
 
-	normalBuffer = {};
-	const GLchar* attributeNormalName = "normalIn";
-	GLuint attributeNormalID = shader->GetAttributeLocation(attributeNormalName);
-	normalBuffer.SetAttributeId(attributeNormalID);
-	normalBuffer.CreateBufferObject();
-	normalBuffer.Bind(GL_ARRAY_BUFFER);
-	normalBuffer.Fill(vertexNormals.size() * sizeof(GLfloat), &vertexNormals[0], GL_STATIC_DRAW);
-	normalBuffer.LinkAttribute(3, GL_FLOAT, GL_FALSE, 0, 0); //reinterpret cast: to binary and back
-	normalBuffer.EnableAttribute();
+	////colorBuffer = {};
+	////const GLchar* attributeColorName = "colorIn";
+	////GLuint attributeColorID = shader->GetAttributeLocation(attributeColorName);
+	////colorBuffer.SetAttributeId(attributeColorID);
+	////colorBuffer.CreateBufferObject();
+	////colorBuffer.Bind(GL_ARRAY_BUFFER);
+	////colorBuffer.Fill(color.size() * sizeof(GLfloat), &vertexPositions[0], GL_STATIC_DRAW);
+	////colorBuffer.LinkAttribute(4, GL_FLOAT, GL_FALSE, 0, 0); //reinterpret cast: to binary and back
+	////colorBuffer.EnableAttribute();
+
+	////UV BUFFER//
+	//uvBuffer = {};
+	//const GLchar* uvName = "uvIn";
+	//GLuint uvAttributeID = shader->GetAttributeLocation(uvName);
+	//uvBuffer.SetAttributeId(uvName, uvAttributeID);
+	//uvBuffer.CreateBufferObject();
+	//uvBuffer.Bind(GL_ARRAY_BUFFER);
+	//uvBuffer.Fill(uvCoordinates.size() * sizeof(GLfloat), uvCoordinates.data(), GL_STATIC_DRAW);
+	//uvBuffer.LinkAttribute(2, GL_FLOAT, GL_FALSE, 0,0);
+	//uvBuffer.EnableAttribute();
 
 	//BUFFER: indexbuffer
 	//indexBuffer = {};
 	//indexBuffer.CreateBufferObject();
 	//indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
 	//indexBuffer.Fill(indices.size() * sizeof(GLfloat), indices.data(), GL_STATIC_DRAW);
-
-	indexBuffer = {};
-	indexBuffer.CreateBufferObject();
-	indexBuffer.Bind(GL_ELEMENT_ARRAY_BUFFER);
-	indexBuffer.Fill(indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
-	/*indexbuffer doesnt need to LinkAttribute and EnableAttribute 
-	because its only for the sequence of indices*/
 
 
 	//Job is done! Empty the vao
@@ -209,77 +227,77 @@ void Mesh::LoadFromMeshData(MeshData* mesh) {
 	}
 
 	// Vertices
-	vertexPositions.clear();
-	if (mesh == nullptr || mesh->vertexCount == 0) {
-		std::cerr << "Mesh has no vertices!" << std::endl;
-		return;
-	}
+	//vertexPositions.clear();
+	//if (mesh == nullptr || mesh->vertexCount == 0) {
+	//	std::cerr << "Mesh has no vertices!" << std::endl;
+	//	return;
+	//}
 
-	for (unsigned int i = 0; i < mesh->vertexPositions->size(); i++) {
-		vertexPositions.push_back(mesh->vertexPositions->at(i));
-	}
+	//for (unsigned int i = 0; i < mesh->vertexPositions->size(); i++) {
+	//	vertexPositions.push_back(mesh->vertexPositions->at(i));
+	//}
 
-	vertexNormals.clear();
-	if (mesh->normals->size() > 0) {
-		for (unsigned int i = 0; i < mesh->normals->size(); i++) {
-			vertexNormals.push_back(mesh->normals->at(i));
-		}
-	}
-	else {
-		std::cerr << "Mesh has no normals!" << std::endl;
-		for (unsigned int i = 0; i < mesh->normals->size(); i++) {
-			vertexNormals.push_back(0.0f);
-		}
-	}
+	//vertexNormals.clear();
+	//if (mesh->normals->size() > 0) {
+	//	for (unsigned int i = 0; i < mesh->normals->size(); i++) {
+	//		vertexNormals.push_back(mesh->normals->at(i));
+	//	}
+	//}
+	//else {
+	//	std::cerr << "Mesh has no normals!" << std::endl;
+	//	for (unsigned int i = 0; i < mesh->normals->size(); i++) {
+	//		vertexNormals.push_back(0.0f);
+	//	}
+	//}
 
 	// Indices
-	indices.clear();
-	if (mesh->faceCount == 0) {
-		std::cerr << "Mesh has no faces!" << std::endl;
-		return;
-	}
+	//data->indices->clear();
+	//if (mesh->faceCount == 0) {
+	//	std::cerr << "Mesh has no faces!" << std::endl;
+	//	return;
+	//}
 
-	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
-	{
-		indices.push_back(mesh->face_vertexIndices->at(i));
-	}
-	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
-	{
-		uvIndices.push_back(mesh->face_uvIndices->at(i));
-	}
-	for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
-	{
-		normalIndices.push_back(mesh->face_normalIndices->at(i));
-	}
+	//for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
+	//{
+	//	indices.push_back(mesh->face_vertexIndices->at(i));
+	//}
+	//for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
+	//{
+	//	uvIndices.push_back(mesh->face_uvIndices->at(i));
+	//}
+	//for (unsigned int i = 0; i < mesh->faceCount * 3; i++)
+	//{
+	//	normalIndices.push_back(mesh->face_normalIndices->at(i));
+	//}
 
 	//Add Color Information
-	uvCoordinates.clear();
-	for (unsigned int i = 0; i < mesh->texCoords->size(); i++)
-	{
-		//uvCoordinates.push_back(0.5f); // R
-		//uvCoordinates.push_back(0.5f); // G
-		//uvCoordinates.push_back(0.5f); // B
+	//uvCoordinates.clear();
+	//for (unsigned int i = 0; i < mesh->texCoords->size(); i++)
+	//{
+	//	//uvCoordinates.push_back(0.5f); // R
+	//	//uvCoordinates.push_back(0.5f); // G
+	//	//uvCoordinates.push_back(0.5f); // B
 
-		uvCoordinates.push_back(mesh -> texCoords-> at(uvIndices[i]));
-	}
+	//	uvCoordinates.push_back(mesh -> texCoords-> at(uvIndices[i]));
+	//}
 
 
 
 	// DEBUG IMPORTANT CONDITIONS //
-	std::cout << "Vertices: " << vertexPositions.size() << std::endl;
+	/*std::cout << "Vertices: " << vertexPositions.size() << std::endl;
 	std::cout << "Normals: " << vertexNormals.size() << std::endl;
-	std::cout << "Indices: " << indices.size() << std::endl;
-	std::cout << "UV coordinates: " << uvCoordinates.size() << std::endl;
+	std::cout << "Indices: " << indices.size() << std::endl;*/
+	//std::cout << "UV coordinates: " << uvCoordinates.size() << std::endl;
 
-	if (vertexPositions.size() != vertexNormals.size()) 
-	{
-		std::cerr << "Warning: The number of vertices and normals do not match!" << std::endl;
-	}
-	if (vertexPositions.size() * 3 != uvCoordinates.size()) {
-		std::cerr << "Warning: The number of vertices and colors do not match!" << std::endl;
-	}
-	if (indices.size() % 3 != 0) {
-		std::cerr << "Warning: The number of indices is not a multiple of 3!" << std::endl;
-	}
+	//if (vertexPositions.size() != vertexNormals.size()) 
+	//{
+	//	std::cerr << "Warning: The number of vertices and normals do not match!" << std::endl;
+	//}
+	//if (vertexPositions.size() * 3 != uvCoordinates.size()) {
+	//	std::cerr << "Warning: The number of vertices and colors do not match!" << std::endl;
+	//}
+	//if (indices.size() % 3 != 0) {
+	//	std::cerr << "Warning: The number of indices is not a multiple of 3!" << std::endl;
+	//}
 
 }

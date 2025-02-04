@@ -11,9 +11,9 @@ public:
 	glm::vec3 diffuse;
 	glm::vec3 specular;
 
-	//float attenuationConst;
-	//float attenuationLinear;
-	//float attenuationQuad;
+	float attenuationConst;
+	float attenuationLinear;
+	float attenuationQuad;
 
 	void Init();
 	void Translate(float x, float y, float z);

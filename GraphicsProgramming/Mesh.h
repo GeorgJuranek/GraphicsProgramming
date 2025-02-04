@@ -14,17 +14,26 @@
 #include <assimp/scene.h> 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
+#include "Texture.h"
+
+
 
 class Mesh
 {
 public:
-	std::vector<GLfloat> vertexPositions;
-	std::vector<GLfloat> uvCoordinates;
-	std::vector<GLfloat> vertexNormals;
-	std::vector<GLuint> indices;
+	//std::vector<GLfloat> vertexPositions;
+	//std::vector<GLfloat> uvCoordinates;
+	//std::vector<GLfloat> vertexNormals;
 
-	std::vector<GLuint> uvIndices;
-	std::vector<GLuint> normalIndices;
+	MeshData* data;
+
+	//std::vector<Vertex> vertices;
+
+	//std::vector<GLuint> indices;
+	//struct oder klasse, die die vertex daten zusammenfasst
+
+	/*std::vector<GLuint> uvIndices;
+	std::vector<GLuint> normalIndices;*/
 
 	Material* material = nullptr;
 	Shader* shader = nullptr;
@@ -37,7 +46,7 @@ public:
 
 	void Update();
 	void Draw(Light* light);
-	void Draw(Light* light, Camera* camera);
+	void Draw(Light* light, Camera* camera, Texture* texture);
 	void Release();
 
 	void Translate(float x, float y, float z);

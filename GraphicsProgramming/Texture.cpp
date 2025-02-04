@@ -50,19 +50,20 @@ void Texture::SetImage(std::string file)//char* file)
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	//Texture filtering		//GL_NEAREST //GL_LINEAR //GL_LINEAR_MIPMAP_LINEAR //GL_NEAREST_MIPMAP_NEAREST //GL_NEAREST_MIPMAP_LINEAR //GL_LINEAR_MIPMAP_NEAREST
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);  
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	//Texture Wrapping		//GL_REPEAT //GL_CLAMP_TO_EDGE //GL_CLAMP_TO_BORDER //GL_MIRRORED_REPEAT
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);  
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	//SDL_FreeSurface(surface);
-	//glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	SDL_FreeSurface(surface);
 
 	//
 	//IMG_Quit();

@@ -16,6 +16,15 @@ void Buffer::SetAttributeId( GLuint id)
 	}
 }
 
+void Buffer::SetAttributeId(std::string name, GLuint id)
+{
+	attributeID = id;
+	if (attributeID == -1)
+	{
+		std::cerr << "Shader or Shader attribute does not exist" << '\n';
+	}
+}
+
 void Buffer::Bind(GLenum target)
 {
 	this->target = target;
