@@ -92,13 +92,18 @@ void Mesh::CreateBuffers()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data->indices->size() * sizeof(Vertex), data->indices->data(), GL_STATIC_DRAW);
 
+	//Position
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0); //?
 	glEnableVertexAttribArray(0);
 
+	//UV
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uvCoordinate)); //?
 	glEnableVertexAttribArray(1);
 
 
+	//Normals
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal)); //?
+	glEnableVertexAttribArray(2);
 
 	//const GLchar* attributeName = "positionIn";
 	//GLuint attributeID = shader->GetAttributeLocation(attributeName);
