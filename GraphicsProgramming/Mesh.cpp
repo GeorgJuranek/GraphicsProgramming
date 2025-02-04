@@ -82,12 +82,37 @@ void Mesh::CreateBuffers()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, data->vertices->size() * sizeof(Vertex), data->vertices->data(), GL_STATIC_DRAW);
 
-	//ToDO: elementBuffer erstellen, attribute erstellen, pos uv normals/ ohne buffer klasse
 
 
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, data->vertices->size() * sizeof(Vertex), data->vertices->data(), GL_STATIC_DRAW);
+	//ToDO: elementBuffer erstellen, attribute erstellen, pos uv normals/ ohne buffer klasse//
+
+	GLuint ebo;
+
+	glGenBuffers(1, &ebo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data->indices->size() * sizeof(Vertex), data->indices->data(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0); //?
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uvCoordinate)); //?
+	glEnableVertexAttribArray(1);
+
+
+
+	//const GLchar* attributeName = "positionIn";
+	//GLuint attributeID = shader->GetAttributeLocation(attributeName);
+	//positionBuffer.SetAttributeId(attributeName, attributeID);
+
+	//const GLchar* attributeNormalName = "normalIn";
+	//GLuint attributeNormalID = shader->GetAttributeLocation(attributeNormalName);
+	//normalBuffer.SetAttributeId(attributeNormalName, attributeNormalID);
+
+	//const GLchar* uvName = "uvIn";
+	//GLuint uvAttributeID = shader->GetAttributeLocation(uvName);
+	//uvBuffer.SetAttributeId(uvName, uvAttributeID);
+
+
 
 
 	//BUFFER: positionbuffer
@@ -148,6 +173,7 @@ void Mesh::CreateBuffers()
 
 
 	//Job is done! Empty the vao
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
 

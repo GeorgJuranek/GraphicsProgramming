@@ -85,7 +85,9 @@ void main()
 	float attenuation = calculateAttenuation(light);
 
 
-	vec4 color = vec4(attenuation * ((ambientColor + diffuseColor + specularColor)* 0.33f), 1.0);
+	//vec4 color = vec4(attenuation * ((ambientColor + diffuseColor + specularColor)* 0.33f), 1.0);
+	vec4 color = vec4(1,1,1,1);
+
 	//gl_FragColor = color * texture(texture1, uvOut);
 
     FragColor = color * texture(texture1, uvOut);

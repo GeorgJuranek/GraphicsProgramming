@@ -1,10 +1,10 @@
 #version 460
 
 
-in vec3 positionIn;
-in vec3 normalIn;
+layout(location=0) in vec3 positionIn;
+layout(location=1) in vec2 uvIn;//
+layout(location=2) in vec3 normalIn;
 //in vec4 colorIn;
-in vec2 uvIn;//
 
 out vec3 positionOut;
 out vec3 normalOut;

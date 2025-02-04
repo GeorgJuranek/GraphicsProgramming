@@ -51,6 +51,11 @@ MeshData* MeshLoader::loadFromFile(string filename)
 		parseLineFaces(line);
 	}
 
+	for (int i = 0; i < faceCount; i++)
+	{
+		data->indices->push_back(i);
+	}
+
 	//calculateTangentAndBitangent();
 
 	return data;
@@ -77,11 +82,6 @@ void MeshLoader::parseLineFaces(string line)
 		parseFaces(line);
 	}
 
-
-	for (int i = 0; i < faceCount; i++)
-	{
-		data->indices->push_back(i);
-	}
 }
 
 //void MeshLoader::parseFaces(string line)
@@ -224,7 +224,7 @@ void MeshLoader::parseTextureCoordinates(string line)
 	istringstream s(line);
 	s >> prefix >> u >> v;
 
-	glm::vec2 uv = glm::vec2(u, v);
+	glm::vec2 uv = glm::vec2(u, 1-v);
 	data->texCoords.push_back(uv);
 
 	//XMFLOAT2* texCoord = new XMFLOAT2(u, v);

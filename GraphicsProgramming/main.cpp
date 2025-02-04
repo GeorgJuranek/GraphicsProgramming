@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
 	Mesh mesh;
 	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
-	mesh.Init(shader, material, "Models/basicCube.obj");
+	mesh.Init(shader, material, "Models/Car.obj");//basicCube.obj");
 	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
 	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");
 

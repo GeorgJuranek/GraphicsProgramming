@@ -6,7 +6,8 @@ using namespace std;
 
 void MeshData::init()
 {
-	//vertices = new vector<Vertex>;
+	vertices = new vector<Vertex>;
+	indices = new vector<GLuint>;
 	/*vertexPositions = new vector<glm::vec3>;
 	normals = new vector<glm::vec3>;
 	texCoords = new	vector<glm::vec2>;*/
