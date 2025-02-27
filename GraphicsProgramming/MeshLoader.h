@@ -28,7 +28,6 @@ private:
 	void parseNormals(string line);
 	void parseTexture(string line);
 	void parseTextureCoordinates(string line);
-	//void calculateTangentAndBitangent();
 
 	MeshData* data;
 	int faceCount;

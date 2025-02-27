@@ -21,8 +21,6 @@ public:
 
 	void Translate(float, float, float);
 
-	//TEST
-	//void Rotate(float angle, glm::vec3 axis);
 	void ChangeViewFromMouse(float mouseX, float mouseY);
 
 	float horizontal = -90;
@@ -32,8 +30,5 @@ private:
 	glm::mat4 _model;
 	glm::mat4 _view;
 	glm::mat4 _projection;
-
-	//TEST
-	//glm::vec3 _rotation;
 };
 

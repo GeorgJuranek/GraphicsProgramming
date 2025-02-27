@@ -21,19 +21,7 @@
 class Mesh
 {
 public:
-	//std::vector<GLfloat> vertexPositions;
-	//std::vector<GLfloat> uvCoordinates;
-	//std::vector<GLfloat> vertexNormals;
-
 	MeshData* data;
-
-	//std::vector<Vertex> vertices;
-
-	//std::vector<GLuint> indices;
-	//struct oder klasse, die die vertex daten zusammenfasst
-
-	/*std::vector<GLuint> uvIndices;
-	std::vector<GLuint> normalIndices;*/
 
 	Material* material = nullptr;
 	Shader* shader = nullptr;

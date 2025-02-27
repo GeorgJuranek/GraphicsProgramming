@@ -10,7 +10,6 @@ public:
 	Shader(const Shader&) = default;
 	Shader& operator=(const Shader&) = default;
 
-	//const GLuint& programID = shaderProgramID;
 	const GLuint& programID = shaderProgramID;
 
 	void Init(std::string, std::string = "");

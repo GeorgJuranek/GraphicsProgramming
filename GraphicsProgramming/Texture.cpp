@@ -42,8 +42,6 @@ void Texture::SetImage(std::string file)//char* file)
 		std::cerr << "\n\tMissing Texture! Couldn't be loaded from file.\n";
 		std::cerr << IMG_GetError() << "\n\n";
 
-		//IMG_Quit();
-		//SDL_Quit();
 		return;
 	}
 
@@ -56,8 +54,6 @@ void Texture::SetImage(std::string file)//char* file)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	//Texture Wrapping		//GL_REPEAT //GL_CLAMP_TO_EDGE //GL_CLAMP_TO_BORDER //GL_MIRRORED_REPEAT
-
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
 
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -65,9 +61,6 @@ void Texture::SetImage(std::string file)//char* file)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	SDL_FreeSurface(surface);
 
-	//
-	//IMG_Quit();
-	//SDL_Quit();
 }
 
 void Texture::ClearFromRAM()

@@ -182,7 +182,6 @@ void Framework::SetFrontfaceDirection(GLenum faceDirection)
 void Framework::EnableDepthTest()
 {
 	glEnable(GL_DEPTH_TEST); //clockwise or not clockwise indices drawing
-	//glDepthFunc(GL_GEQUAL);
 }
 
 void Framework::ClearWindow()

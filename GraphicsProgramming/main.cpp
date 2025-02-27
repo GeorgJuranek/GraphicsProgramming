@@ -18,11 +18,9 @@ int main(int argc, char* argv[])
 	Framework* framework = new Framework();
     framework->Init();
 
-	//
 	//The SHADER creates the shaderProgram from the .vert(vertices) and .frag(fragment =color) glsl code
 	Shader* shader = new Shader();
-	shader->Init("BasicColorLit.vert", "BasicColorLit.frag"); //shader->Init("Basic.vert", "Basic.frag"); 
-
+	shader->Init("BasicColorLit.vert", "BasicColorLit.frag");
 
 	//The LIGHT
 	Light* light = new Light();
@@ -32,10 +30,7 @@ int main(int argc, char* argv[])
 	Material* material = new Material();
 
 	Mesh mesh;
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/basicCube.obj");
-	mesh.Init(shader, material, "Models/Car.obj");//basicCube.obj");
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/Pistol_02.obj");
-	//mesh.Init(shader, material, "C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Models/GTR.obj");
+	mesh.Init(shader, material, "Models/Car.obj");
 
 	//The CAMERA
 	Camera* camera = new Camera();
@@ -48,7 +43,7 @@ int main(int argc, char* argv[])
 	//Texture
 	Texture* texture = new Texture();
 	texture->CreateTexture();
-	texture->SetImage("Textures/car.png");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car");//C:/Users/Georg/Desktop/GraphicsProgramming/GraphicsProgramming/Textures/car.png");//"C:\\Users\\Georg\\Desktop\\GraphicsProgramming\\GraphicsProgramming\\Textures\\BricksTexture.png");
+	texture->SetImage("Textures/car.png");
 
 
 
@@ -74,7 +69,6 @@ int main(int argc, char* argv[])
 	{
 
 		// RENDERING //
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (light == nullptr || camera == nullptr)
@@ -88,8 +82,7 @@ int main(int argc, char* argv[])
 			std::cerr << "framework window is missing";
 
 
-		//Transformation Tests
-
+		//Input
 		SDL_Event events;
 		while (SDL_PollEvent(&events))
 		{
@@ -114,7 +107,6 @@ int main(int argc, char* argv[])
 				case SDLK_ESCAPE:
 					if (framework->isCursorLocked)
 					{
-						//std::cout << "Left Inside-Mode\n";
 						framework->LockCursor(false);
 					}
 					else
@@ -171,13 +163,11 @@ int main(int argc, char* argv[])
 				break;
 
 			case SDL_KEYUP:
-				//system("cls");
 				updateLog ->DisplayPositionsUpdate(light, mesh, camera, framework->isCursorLocked);
 				break;
 			
 			case SDL_MOUSEBUTTONDOWN:
 				if (events.button.button == SDL_BUTTON_LEFT && !framework->isCursorLocked)
-					//std::cout << "Went into Inside-Mode\n";
 					framework->LockCursor(true);
 
 				updateLog->DisplayPositionsUpdate(light, mesh, camera, framework->isCursorLocked);
@@ -188,7 +178,6 @@ int main(int argc, char* argv[])
 		}
 		
 	}
-
 
 	// CLEAN UP //
 	framework->Close();

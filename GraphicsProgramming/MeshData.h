@@ -1,15 +1,9 @@
 #pragma once
 #include <GL\glew.h>
-
 #include <Vector>
-//#include "Vertex.h"
-//#include "Vector2.h"
-//#include "Vector3.h"
 #include <string>
-
 #include <glm.hpp>
 
-//#include "Mesh.h";
 
 using namespace std;
 
@@ -24,7 +18,8 @@ struct Vertex
 /// <summary>
 /// This class holds all data from a mesh that is being read by the MeshLoader.
 /// </summary>
-class MeshData //Kann raus und im Mesh direkt lagern
+
+class MeshData
 {
 public:
 	int vertexCount = 0;

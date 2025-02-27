@@ -2,10 +2,6 @@
 #include <iostream>
 #include <windows.h>
 
-//#include "Light.h"
-//#include "Mesh.h"
-//#include "Camera.h"
-
 void ConsoleLoger::Init()
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -15,7 +11,6 @@ void ConsoleLoger::Init()
 	if (GetConsoleScreenBufferInfo(hConsole, &consoleInfo)) 
 	{
 		consoleRowStart = consoleInfo.dwCursorPosition.Y;
-		//consoleRowEnd = consoleRowStart + 6;
 	}
 }
 
@@ -41,10 +36,4 @@ void ConsoleLoger::DisplayPositionsUpdate(Light* light, Mesh mesh, Camera* camer
         std::cout << "\n";
     }
 
-    //BUG NOTE:
-    /*
-    the Program freezes when cursor position is changed manually in 
-    console window and then clicked on window to enter inside-mode (no mouse rotation or anything possible).
-    Can only be closed when (for example) i call the task manager, so i get the cursor back and then quit it through visualstudio
-    */
 }

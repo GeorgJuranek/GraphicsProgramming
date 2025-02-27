@@ -9,9 +9,6 @@ void Camera::Init()
 	direction = glm::vec3(0.0f, 0.0f, -1.0f);
 	up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	//TEST
-	//_rotation = glm::vec3(0.0f, 1.0f, 0.0f);
-
 	_view = lookAt(position, position+direction, up);
 
 	nearPlane = 0.1f;
@@ -40,12 +37,6 @@ void Camera::Translate(float x, float y, float z)
 }
 
 
-
-//void Camera::ChangeViewFromMouse(float mouseX, float mouseY)
-//{
-//	direction += glm::vec3(mouseX, -mouseY, -1.0f);
-//	_view = lookAt(position, position + direction, up);
-//}
 
 void Camera::ChangeViewFromMouse(float mouseX, float mouseY) 
 {
